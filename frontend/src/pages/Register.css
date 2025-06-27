@@ -1,0 +1,212 @@
+:root {
+  --primary-color: #4a6fa5;
+  --primary-hover: #3a5a8f;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --error-color: #dc3545;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --bg-dark: #121212;
+  --bg-darker: #0d0d0d;
+  --bg-light: #1e1e1e;
+  --border-color: #2d2d2d;
+  --input-bg: #2a2a2a;
+  --transition-speed: 0.3s;
+}
+
+/* Base Styles */
+.auth-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--bg-light);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: var(--text-primary);
+  transition: all var(--transition-speed) ease;
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  font-size: 1.8rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.auth-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 3px;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: all var(--transition-speed) ease;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all var(--transition-speed) ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.25);
+}
+
+.form-group input.error {
+  border-color: var(--error-color);
+}
+
+.form-group input.error:focus {
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+/* Error Messages */
+.error-message {
+  color: var(--error-color);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  animation: fadeIn var(--transition-speed) ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button Styles */
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.next-button, .submit-button {
+  background-color: var(--primary-color);
+  color: white;
+  width: 100%;
+}
+
+.next-button:hover, .submit-button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.next-button:active, .submit-button:active {
+  transform: translateY(0);
+}
+
+.back-button {
+  background-color: var(--secondary-color);
+  color: white;
+  margin-right: 1rem;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .auth-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .back-button {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Animation for step transition */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Step Transition Effects */
+.auth-container form {
+  animation: slideInRight 0.4s ease;
+}
+
+.auth-container form.slide-left {
+  animation: slideInLeft 0.4s ease;
+}
+
+/* Floating Labels Effect */
+.form-group.floating-label {
+  position: relative;
+}
+
+.form-group.floating-label label {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  pointer-events: none;
+  transition: all var(--transition-speed) ease;
+}
+
+.form-group.floating-label input:focus + label,
+.form-group.floating-label input:not(:placeholder-shown) + label {
+  top: -0.5rem;
+  left: 0.8rem;
+  font-size: 0.7rem;
+  background-color: var(--bg-light);
+  padding: 0 0.3rem;
+  color: var(--primary-color);
+}

@@ -1,0 +1,146 @@
+/* ConnectButton.css */
+.connect-button-container {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.connect-button {
+  background: linear-gradient(135deg, #f6851b 0%, #e2761b 100%);
+  color: white;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(246, 133, 27, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+}
+
+.connect-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(246, 133, 27, 0.4);
+  background: linear-gradient(135deg, #e2761b 0%, #d16915 100%);
+}
+
+.connect-button:disabled {
+  background: #cccccc;
+  transform: none !important;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.connect-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.connect-button:hover::before {
+  left: 100%;
+}
+
+.connected-account {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.9rem;
+  color: #333;
+  display: inline-block;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.connected-account:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.connect-loading {
+  display: inline-flex;
+  align-items: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* MetaMask fox icon */
+.connect-button .fox-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDI0QzE4LjYyNzQgMjQgMjQgMTguNjI3NCAyNCAxMkMyNCA1LjM3MjU4IDE4LjYyNzQgMCAxMiAwQzUuMzcyNTggMCAwIDUuMzcyNTggMCAxMkMwIDE4LjYyNzQgNS4zNzI1OCAyNCAxMiAyNFoiIGZpbGw9IiNGRjg1MUIiLz4KPHBhdGggZD0iTTE4LjY0IDcuNjA2M0wxMi40MTM0IDEzLjA4ODdMOS4zNTk5NiA3LjYwNjNIMTguNjRaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMi40MTM0IDEzLjA4ODdMMTUuNDU5OSAxNi4zOTM3TDE4LjY0IDEzLjA4ODdMMTIuNDEzNCAxMy4wODg3WiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNS4zNTk5NiA3LjYwNjNMNy40ODU0MSAxNi4zOTM3TDkuMzU5OTYgNy42MDYzSDUuMzU5OTZaIiBmaWxsPSIjeDg2RkZGIi8+CjxwYXRoIGQ9Ik03LjQ4NTQxIDE2LjM5MzdMOS4zNTk5NiA3LjYwNjNMNy40ODU0MSAxNi4zOTM3WiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNy40ODU0MSAxNi4zOTM3TDEyLjQxMzQgMTMuMDg4N0w5LjM1OTk2IDcuNjA2M0w3LjQ4NTQxIDE2LjM5MzdaIiBmaWxsPSIjRkZGRkZGIi8+Cjwvc3ZnPgo=');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Spinner animation */
+.connect-loading .spinner {
+  width: 16px;
+  height: 16px;
+  border: 3px solid rgba(246, 133, 27, 0.3);
+  border-radius: 50%;
+  border-top-color: #f6851b;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error message styling */
+.error-message {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .connect-button {
+    padding: 0.8rem 1.5rem;
+    min-width: 160px;
+    font-size: 0.9rem;
+  }
+  
+  .connected-account {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.8rem;
+  }
+}

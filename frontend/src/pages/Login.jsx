@@ -1,37 +1,72 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "../services/api";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import './Login.css';
 
-export default function Login() {
-  const nav = useNavigate();
-  const [cred, setCred] = useState({ email: "", password: "" });
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const submit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    
     try {
-      const { data } = await login(cred);
-      localStorage.setItem("token", data.access_token);
-      nav("/dashboard");
-    } catch {
-      alert("Invalid credentials");
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        localStorage.setItem('device_id', data.device_id);
+        navigate('/dashboard');
+      } else {
+        setError(data.error || 'Login failed');
+      }
+    } catch (err) {
+      setError('Network error. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={submit}>
+    <div className="auth-container">
       <h2>Login</h2>
-      <input
-        placeholder="Email"
-        value={cred.email}
-        onChange={(e) => setCred({ ...cred, email: e.target.value })}
-      />
-      <input
-        placeholder="Password"
-        type="password"
-        value={cred.password}
-        onChange={(e) => setCred({ ...cred, password: e.target.value })}
-      />
-      <button type="submit">Login</button>
-    </form>
+      {error && <p className="error">{error}</p>}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button 
+          type="submit" 
+          className={isLoading ? 'loading' : ''}
+          disabled={isLoading}
+        >
+          {isLoading ? '' : 'Login'}
+        </button>
+      </form>
+      <p>
+        Don't have an account? <Link to="/register">Register</Link>
+      </p>
+    </div>
   );
 }
+
+export default Login;
