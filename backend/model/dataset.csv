@@ -1,0 +1,187 @@
+maintype,type,exercise1,exercise2,exercise3,exercise4,exercise5,level
+Fitness,full_body,Jumping Jacks,Burpees,Mountain Climbers,High Knees,Plank,0
+Fitness,arms,Bicep Curls,Tricep Dips,Push-ups,Hammer Curls,Shoulder Press,1
+Fitness,legs,Squats,Lunges,Deadlifts,Calf Raises,Glute Bridges,1
+Meditation,sleep,Body Scan,Box Breathing,Progressive Muscle Relaxation,Guided Imagery,4-7-8 Breathing,0
+Yoga,hatha,Mountain Pose,Downward Dog,Warrior II,Tree Pose,Bridge Pose,0
+Fitness,full_body,Jumping Jacks,Burpees,Mountain Climbers,High Knees,Plank,0
+Fitness,full_body,Battle Ropes,Thrusters,Kettlebell Swings,Rowing Machine,Box Jumps,1
+Fitness,full_body,Bear Crawls,Medicine-Ball Slams,Russian Twists,Farmer Carry,Sled Push,1
+Fitness,full_body,Step-Up Knee Drives,Inchworms,Skaters,Star Jumps,Wall Sit,0
+Fitness,full_body,Man Makers,Tire Flips,Devil Press,Jump Rope,Renegade Rows,0
+Fitness,arms,Bicep Curls,Tricep Dips,Diamond Push-ups,Reverse Curls,Overhead Extensions,1
+Fitness,arms,Close-Grip Bench,Skull Crushers,Z-Bar Curl,Cable Push-downs,Spider Curls,1
+Fitness,arms,Resistance-Band Curls,Chair Dips,Arnold Press,Plank-Up-Downs,Forearm Rollers,0
+Fitness,arms,Chin-Ups,Alternating Hammer Curls,TRX Tricep Press,Cable Kick-backs,Bodyweight Rows,0
+Fitness,arms,Preacher Curl,Incline DB Curl,Single-Arm Overhead Press,Diamond Pike Push-ups,Tricep Kick-backs,1
+Fitness,legs,Squats,Lunges,Deadlifts,Calf Raises,Glute Bridges,1
+Fitness,legs,Jump Squats,Box Step-Ups,Bulgarian Split Squats,Romanian Deadlift,Sumo Squats,0
+Fitness,legs,Leg Press,Hip Thrusts,Pistol Squats,Cycling Sprints,Hamstring Curls,1
+Fitness,legs,Wall Sit,Side Lunges,Curtsy Lunge,Jump Rope,Butt Kicks,0
+Fitness,legs,Walking Lunges,Frog Jumps,Reverse Lunge-Knee Drive,Hill Sprints,Cossack Squats,1
+Fitness,shoulders,Shoulder Press,Lateral Raises,Front Raises,Face Pulls,Handstand Holds,1
+Fitness,shoulders,Pike Push-ups,Arnold Press,Y-Raises,DB Shrugs,Monkey Rows,0
+Fitness,shoulders,Landmine Press,Cable Lateral Raise,Overhead Carry,Scaption,Plate Raises,1
+Fitness,shoulders,Seated Military Press,Push Press,Reverse Flyes,Wall Angels,Plank to Downward Dog,0
+Fitness,shoulders,DB Upright Row,Standing Arnold Curl-Press,Behind-Neck Press,Prone T,TRX Y-Fly,1
+Fitness,core,Plank,Bicycle Crunch,Leg Raises,Russian Twist,Superman,0
+Fitness,core,Flutter Kicks,Hanging Knee Raises,Ab Roll-Out,Mountain Climbers,Side Plank,1
+Fitness,core,Dead Bug,V-Ups,Toe Touches,Side Bends,Cable Woodchop,0
+Fitness,core,Dragon Flag,Turkish Get-Up,Windshield Wipers,Medicine-Ball Slam,Weighted Sit-ups,1
+Fitness,core,Bird Dog,Plank Jacks,Cross-Body Mountain Climbers,Reverse Crunch,Stability-Ball Pike,0
+Fitness,cardio,Running,Cycling,Jump Rope,Rowing,Burpee Intervals,0
+Fitness,cardio,HIIT Sprints,Box Jumps,Battle Ropes,Shadow Boxing,Jumping Lunges,0
+Fitness,cardio,Stair Climber,Elliptical,Speed Skaters,Tuck Jumps,Jumping Jacks,0
+Fitness,cardio,Jump Squats,High-Knee Run,Butt Kicks,Kettlebell Swing,Jump Rope Double‐Under,0
+Fitness,cardio,Tempo Cycling,Rowing Sprints,Arc Trainer,Agility Ladder,Medicine-Ball Sprawl,0
+Meditation,health,Body Scan,Belly Breathing,Loving-Kindness,Guided Healing,Grounding Visualization,0
+Meditation,health,Chakra Balancing,Sunlight Meditation,Qi Gong Breath,Self-Compassion Pause,Metta Chant,0
+Meditation,health,Walking Meditation,Progressive Relaxation,Healing Mantra,Rainfall Focus,Candle Gazing,0
+Meditation,health,Sound Bowl Session,Color Visualization,Five-Senses Check-In,Heart Coherence,Inner-Smile Technique,0
+Meditation,health,Mindful Shower,Gratitude Breath,Healing Affirmations,Breath-Counting,Whole-Body Relax,0
+Meditation,heart,Heart Coherence,4-7-8 Breathing,Compassion Meditation,Gratitude Journal Visual,Smile Breath,0
+Meditation,heart,Metta Bhavana,Heart-Chakra Chant,Butterfly Hug,Tonglen Practice,Soft Belly Breath,0
+Meditation,heart,Box Breathing,Emotion Labeling,Self-Compassion Pause,Affectionate Breaths,Positive Recall,0
+Meditation,heart,Coherent Breathing,Counting Gratitudes,Heartfelt Mantra,Love-Kindness Scan,Hug Visualization,0
+Meditation,heart,Heart Rhythm Meditation,Hand-on-Heart Pause,Slow 6-Breath Cycle,Kindness Phrases,Joy Flashbacks,0
+Meditation,brain,Focus on Breath,Counting Thoughts,Open Awareness,Noting Practice,Sound Awareness,0
+Meditation,brain,Zen Zazen,Label-and-Let-Go,Counting Up to 10,Cloud Watching,Mindful Listening,0
+Meditation,brain,Body-Mind Centering,Neuroplasticity Visual,Brain Gym Breath,Attention Anchor,Noting Emotions,0
+Meditation,brain,Choiceless Awareness,Anchor Word Practice,Minute Mindfulness,River of Thought,Raisin Exercise,0
+Meditation,brain,Candle Flame Focus,5-4-3-2-1 Grounding,Single-Point Trataka,Nothingness Meditation,Clock Tick Listening,0
+Meditation,sleep,Body Scan,Bedtime Yoga,Nostril Breathing,Yoga Nidra,Progressive Relaxation,0
+Meditation,sleep,4-7-8 Breathing,White Noise Focus,Counting Sheep,Guided Sleep Story,Reverse Beditation,0
+Meditation,sleep,Parasympathetic Breath,Weighted Blanket Mindfulness,Soothing Touch,Box Breathing,Sleep Affirmations,0
+Meditation,sleep,Moon Visualization,Celtic Weave Breath,Legs Up Wall Pause,Night Gratitude,Whole-Body Sigh,0
+Meditation,sleep,Alternate Nostril,Whisper Mantra,Tension-Release Scan,Beach Visualization,Lullaby Humming,0
+Meditation,stress,Box Breathing,5-Finger Breath,Observe & Label,Soothing Touch,Safe Place Visualization,0
+Meditation,stress,RAIN Method,Counting Breath,Progressive Muscle Relax,Grounding 5-4-3-2-1,Affirming Words,0
+Meditation,stress,Stress Shake,Bumble-Bee Breath,Soft-Belly,Hand Massage Scan,Ocean Waves Audio,0
+Meditation,stress,Mountain Meditation,Acceptance Breath,Guided Release,Color Exhale,Counting Clouds,0
+Meditation,stress,Equal Breath,O-Ocean Sound,Loving Acceptance,Self-Hug Pause,Butterfly Tap,0
+Meditation,focus,Box Breathing,Counting Up,Task Visualization,Single-Point Candle,Gazing Dot,0
+Meditation,focus,5-Breath Cycle,Mantra Repetition,Clock-Tick Focus,Label Distractions,Breath-Anchor,0
+Meditation,focus,Eye of Mind,Open-Close Fists,Zen Counting,Focus Object Hold,Meta-Attention Drill,0
+Meditation,focus,Alternate Nostril,Trataka,Gong Listening,Micro-Meditation,Attention on Pulse,0
+Meditation,focus,Slow-Blink Focus,One-Minute Breath,Focus on Sounds,Visual Field Hold,Grounded Sitting,0
+Yoga,hatha,Mountain Pose,Downward Dog,Warrior II,Tree Pose,Bridge Pose,0
+Yoga,hatha,Cobra Pose,Triangle Pose,Seated Forward Fold,Cat-Cow,Child’s Pose,0
+Yoga,hatha,Extended Side Angle,Camel Pose,Half-Moon,Low Lunge,Puppy Pose,0
+Yoga,hatha,Chair Pose,Revolved Triangle,Locust Pose,Bound Angle,Sphinx Pose,0
+Yoga,hatha,Gate Pose,Standing Forward Bend,Cow Face Pose,Warrior I,Fish Pose,0
+Yoga,vinyasa,Sun Salutation A,Chaturanga,Upward Dog,Warrior I,Chair Twist,0
+Yoga,vinyasa,Sun Salutation B,Three-Legged Dog,Crescent Lunge,Side Plank,Wild Thing,0
+Yoga,vinyasa,Down Dog Split,Low Lunge Twist,High Plank,Yogi Push-up,Forward Fold,0
+Yoga,vinyasa,Floating Cobra,Reverse Warrior,Half-Splits,Lizard Pose,Core Plank Taps,0
+Yoga,vinyasa,Pyramid Pose,Standing Splits,Bakasana Prep,Side Angle,Boat Pose,0
+Yoga,ashtanga,Sun A Series,Sun B Series,Standing Sequence,Primary Series Seated,Back-Bending,1
+Yoga,ashtanga,Marichyasana C,Bujapidasana,Supta Kurmasana,Garbha Pindasana,Setu Bandhasana,1
+Yoga,ashtanga,Utthita Hasta Padangusthasana,Paschimottanasana,Upavishta Konasana,Baddha Konasana,Shoulder Stand,1
+Yoga,ashtanga,Vinyasa Jump-Back,Half Bound Lotus,Supta Konasana,Tittibhasana,Headstand,1
+Yoga,ashtanga,Virabhadrasana B,Dandasana,Purvottanasana,Kukkutasana,Ottega Roll,1
+Yoga,yin,Butterfly Pose,Sphinx Pose,Dragon Pose,Melting Heart,Half Butterfly,0
+Yoga,yin,Deer Pose,Saddle Pose,Seal Pose,Square Pose,Supported Fish,0
+Yoga,yin,Happy Baby,Reclined Twist,Caterpillar,Legs Up Wall,Shoelace Pose,0
+Yoga,yin,Child’s Pose,Dragonfly,Sphinx Twist,Half Saddle,Frog Pose,0
+Yoga,yin,Banana Pose,Wide-Knee Child,Toe Squat,Reclined Butterfly,Sleeping Swan,0
+Yoga,restorative,Supported Child,Cushioned Savasana,Reclined Bound Angle,Legs Up Wall,Pillow Twist,0
+Yoga,restorative,Bolster Heart Opener,Supported Bridge,Gentle Fish,Side-Lying Savasana,Supported Forward Fold,0
+Yoga,restorative,Reclined Hero,Supported Twist,Wall-Supported Butterfly,Resting Half-Dog,Blanket Roll Spine,0
+Yoga,restorative,Supported Seated Forward,Bolster Under Knees,Lying Butterfly,Easy Supported Backbend,Eyes-Covered Savasana,0
+Yoga,restorative,Supported Puppy,Gentle Happy Baby,Bolster Child,Ribbon Shoulder Opener,Bolster-Supported Lizard,0
+Yoga,power,Power Vinyasa Flow,Chaturanga Push-ups,Jump Switch Lunge,Handstand Hops,Boat Pose,1
+Yoga,power,Dolphin Push-ups,Chair Pose Pulses,Crow Pose,Hollow Body Holds,Push-up to Side Plank,1
+Yoga,power,Warrior III Pulses,Pistol Squat Prep,Half Moon Pulse,Lunge Jumps,Core Mountain Climbers,1
+Yoga,power,Plank Jack Flow,Corkscrew Lunge,Power Chair Jump,Dragon Squat,Inverted V Press,1
+Yoga,power,Burpee-to-Down Dog,Power Skandasana,Side Crow,Wild Thing Crunches,Chaturanga Holds,1
+Fitness,full_body,Burpee Broad Jump,Kettlebell Clean-Press,TRX Row,Medicine-Ball Thruster,Reverse Snow Angel,0
+Fitness,full_body,Alternating Dumbbell Snatch,Sledgehammer Swings,Jump-Rope Criss-Cross,Box Shuffle,Sprawl to Plank,1
+Fitness,full_body,Devil Squat Clean,Starfish Crunch,Weighted Step-Through,Plank Jump-In,Half-Burpee,0
+Fitness,full_body,Med-Ball Chest Pass,Inverted Row,Alternating Dumbbell Swing,Kang Squat,Seal Jack,1
+Fitness,full_body,Thruster-to-Press-Out,Overhead Plate Halo,Lateral Box Hop,Reverse Lunge-Curl,T-Push-up,0
+Fitness,arms,Barbell Curl,Close-Grip Push-up,Cable Rope Hammer Curl,Overhead EZ-Bar Extension,Zottman Curl,1
+Fitness,arms,Single-Arm Landmine Row,Tricep Bench Dip,Resistance-Band Curl,Incline DB Skull Crusher,Cross-Body Curl,0
+Fitness,arms,Rope Face-Pull,Reverse Cable Curl,Tate Press,Seated Dumbbell Curl,Overhead Band Press-Down,1
+Fitness,arms,TRX Biceps Row,Kettlebell Crush Curl,Diamond Push-up,JM Press,Isometric Curl Hold,0
+Fitness,arms,Barbell Drag Curl,Lying DB Tricep Extension,Alternating Cross-Curl,Standing French Press,Reverse-Grip Bench,1
+Fitness,legs,Jump Lunges,Hack Squat,Sled Drag,Resistance-Band Kickback,Single-Leg Romanian Deadlift,1
+Fitness,legs,Lateral Step-Up,Jazz Squat,Good Morning,Reverse Hyperextension,Skater Lunge,0
+Fitness,legs,Cossack Squat Pulse,Banded Side Walk,Hip Circle Duck Walk,Trap-Bar Deadlift,Split Squat Jumps,1
+Fitness,legs,Pulse Squat-Hold,Frog Pump,Toe-Elevated RDL,Kettlebell Goblet Squat,Reverse Curtsy Lunge,0
+Fitness,legs,Overhead Squat,Jefferson Deadlift,Sliding Ham Curl,Pogo Jump,Box-Tap Squat,1
+Fitness,shoulders,Cuban Press,Y-Raise,I-Raise,T-Raise,Face-Down W-Raise,0
+Fitness,shoulders,Landmine Lateral Press,Bottom-Up KB Press,High Pull,Hand-Release Push-up,Scapular Wall Slide,1
+Fitness,shoulders,Standing Bradford Press,Plank-to-Pike Push-up,Plate Front Lift,Prone Y-T-I,Banded Pull-Apart,0
+Fitness,shoulders,Seated Z-Press,Kettlebell Around-the-World,Dumbbell Armpit Row,Isometric Pike Hold,Incline Reverse Fly,1
+Fitness,shoulders,Half-Kneeling Press,Renegade Row-Press,DB Lateral Pulse,Wall-Supported Handstand,Scaption Raise,0
+Fitness,core,Hollow Hold,Plank Reach-Under,Weighted Russian Twist,Alternating V-Up,Side Plank Hip Lift,0
+Fitness,core,Seated Knee-Tuck,Medicine-Ball Toss Sit-Up,Stir-the-Pot,KB Dead-Bug,BodySaw,1
+Fitness,core,Cable Pallof Press,Plank Shoulder Tap,Standing Oblique Crunch,Reverse Hollow Rock,Jackknife Sit-Up,0
+Fitness,core,KB Windmill,Stability-Ball Pass,TRX Pike,Star Plank,Banded Good Morning Twist,1
+Fitness,core,Oblique V-Up,Plank Toe Tap,Bear Crawl Hold,Side Bend Reach,Weighted Dead Bug,0
+Fitness,cardio,Sprint Intervals,Rope Slams,Shadow Skip,High-Knee Lateral Run,Boxer Shuffle,0
+Fitness,cardio,Dance Cardio Flow,Jump-Rope Side-Swing,Elliptical Sprint,Speed Burpee Ladder,Agility Cone Drill,0
+Fitness,cardio,Rowing Intervals,Battle-Rope Waves,Skater Hop,Jumping Jack Punch,Stair Sprint,0
+Fitness,cardio,Shuffle Sprint,Medicine-Ball Rainbow Slam,Quick Feet Tap,Broad Jump Backpedal,Jump-Squat Twist,0
+Fitness,cardio,Spin-Bike Hills,Jump-Rope Double Side Swing,Seal Jack Pulse,Lateral Hurdle Hop,Reverse Burpee,0
+Meditation,health,Mindful Eating Bite,Healing Breath Counting,Safety Bubble Visual,Guided Energy Scan,Inner Child Smile,0
+Meditation,health,Sunrise Gratitude Sit,Nature Sound Sync,Self-Massage Scan,Balance Rocking Breath,Qi Healing Hands,0
+Meditation,health,Forest Bathing Audio,Full-Body Yawn Stretch,Healing Warm-Light Visual,Micro-Pause Check-In,Touch-Point Awareness,0
+Meditation,health,Five-Minute Kindness,Self-Reiki Hold,Calm Body Map,Journaling Pause,Ground-Through-Feet,0
+Meditation,health,Calm-Heart Hum,Smooth Wave Breath,Inner-Physician Dialogue,Ground-to-Sky Visual,Gratitude Stretch,0
+Meditation,heart,Inner-Child Compassion,Humming Heartbeat,Heart-Smile Visualization,Twin-Heart Blessing,Breath of Joy,0
+Meditation,heart,Hands-to-Heart Mudra,Grateful Ink Drop,Embrace-Memory Replay,Heart-Beat Listening,Loving-Hug Breath,0
+Meditation,heart,Affection Loop,Heart-Light Expansion,Kind-Word Echo,Pet-Love Visualization,Heart-Tap Tap,0
+Meditation,heart,Golden Cord Breath,Heart-Garden Visual,Care-Giver Recall,Heart-Wave Chant,Soft-Gaze Smile,0
+Meditation,heart,Heart-Harp Sound Bath,Loving-Note Reflection,3-Good-Things Recall,Embrace-Self Wrap,Breathing Flower,0
+Meditation,brain,Observation Clock,Thought Bubble Pop,Brain-Wave Counting,Sensory Snapshot,Blink-Pause Focus,0
+Meditation,brain,Inner Screen Watch,Sound-Dot Focus,Whisper Counting,Flash-Card Memory,Alert-Anchor Breath,0
+Meditation,brain,Color-Sampling Scan,Attentive Ear Stretch,Micro Meditation-Bell,Sharp-Focus Gaze,Task List Clear-Out,0
+Meditation,brain,Point-in-Space Anchor,Mind-Labelling Flow,Single-Tone Listen,Visual Reset Blink,Thought Raindrop,0
+Meditation,brain,Mental Chess,Number-Skip Counting,Shape Tracing Breath,Visualization Dot Matrix,Eye-Motion Pause,0
+Meditation,sleep,Starry Sky Visual,Three-Part Breath,Bed-Edge Release,Cocoon Wrap,Sandman Story,0
+Meditation,sleep,Weighted Pillow Pause,Soft Music Sway,Slow-Wave Breath,Gentle Rocking Visualization,Lullaby Hush,0
+Meditation,sleep,Evening Gratitude Glide,Night-Sky Tracing,Soothing Hums,Sleepy Lion Yawn,Loose-Jaw Release,0
+Meditation,sleep,Moon-Cycle Focus,Deep-sea Submerge,Blanket-Tuck Scan,Cradle-Hold Pose,Pillow-Press Breath,0
+Meditation,sleep,Glow-Light Fade,Counting Stars,Soothing Rainfall Audio,Quiet Heartbeat Focus,Lazy-Stretch Melt,0
+Meditation,stress,Shoulder-Roll Breath,Stress Ball Squeeze,Steam Release Exhale,Color Wash-Out,Ground Drop Visualization,0
+Meditation,stress,Emotion Wave Surf,Label-Let-Go,Kite-String Breath,Palm-Press Hug,Cloud Release Visual,0
+Meditation,stress,Waterfall Cleansing,Feel-to-Floor Check-In,Shake-Out Pause,Crescent Smile Breath,Stress-Meter Dial,0
+Meditation,stress,Storm-to-Calm Visual,Tension-Trace Scan,Feather-Drop Breath,Compassion Touch,Perspective Perch,0
+Meditation,stress,Fog-Lift Inhale,Pause-and-Name,Belly-Laugh Burst,Ground Wire Visualization,Soft-Palm Sweep,0
+Meditation,focus,Dot-Stare Mindful,Gong-Strike Count,Scent-Focus Blink,Keyboard Space-Pause,Thread-the-Needle Breath,0
+Meditation,focus,Pencil-Tip Gaze,Color-Dot Drill,Arrow-Breath Guide,Stop-Light Chant,Steady-Hand Hold,0
+Meditation,focus,Focus-Square Visual,Micro-Focus Bell,Stone-Hold Still,One-Word Anchor,Follow-Finger Trace,0
+Meditation,focus,Number-Box Breath,Target Sight Pause,Click-Metronome Listen,Name-Object Scan,Focus-Fire Breath,0
+Meditation,focus,Nose-Tip Point,Laser-Spot Visual,Counting Grain,Single-Word Repeat,Still-Cup Hold,0
+Yoga,hatha,Revolved Half-Moon,Crescent Twist,Wide-Leg Forward Bend,Reclined Big-Toe Pose,Hero Pose,0
+Yoga,hatha,Bound Warrior,Revolved Chair,Circle Lunge,Half-Camel,Prasarita Twist,0
+Yoga,hatha,Dancing Shiva,Low Lunge Quad Stretch,Crocodile Pose,Cow Face Arms,Reclined Pigeon,0
+Yoga,hatha,Reverse Warrior Pulse,Reclined Twist-Bind,Half-Frog,Revolved Triangle Bind,Boat Prep,0
+Yoga,hatha,Eagle Pose,Standing Hand-Clasp Backbend,Side Plank Knee-Lift,Seated Side Bend,Archer Pose,0
+Yoga,vinyasa,Half-Moon Chapasana,Side Plank Star,Wild Thing Flip,Low Lunge Pulse,Floating Forward Fold,0
+Yoga,vinyasa,Tabletop Kick-Through,Prancing Down Dog,Crescent Knee Tap,Runner’s Lunge Twist,Standing Split Pulse,0
+Yoga,vinyasa,Low Skandasana Flow,Horizon Lunge,Reverse Table Dip,Dolphin Flow,Diving Forward Fold,0
+Yoga,vinyasa,Crescent Airplane Arms,Three-Leg Chaturanga,Knee-to-Nose Flow,Reverse Warrior Pulse,Chair Heel Lift,0
+Yoga,vinyasa,Plank Toe-Tap,Hovering Cobra,Side Lunge Fly,Wide-Leg Flow,Half-Split Pulse,0
+Yoga,ashtanga,Intermediate Series Prep,Pincha Mayurasana,Karandavasana,Leg-Behind-Head Entry,Drop-back Bridge,1
+Yoga,ashtanga,Handstand Tuck,Janu Sirsasana C,Supta Trivikramasana,Visvamitrasana,Bound Headstand,1
+Yoga,ashtanga,Tittibhasana B,Bhurangasana,Upward Lotus,Parsva Dhanurasana,Ganda Bherundasana,1
+Yoga,ashtanga,Navasana Hold,Half-Lotus Rising,Marichyasana D,Rolling Vinyasa,Chin-Stand,1
+Yoga,ashtanga,Purna Matsyendrasana,Handstand Press,Parivritta Parsvakonasana,Lotus Jump-Back,Bhairavasana,1
+Yoga,yin,Dragonfly Twist,Snail Pose,Hammock Pose,Broken Wing,Supported Saddle,0
+Yoga,yin,Seal Twist,Pentacle Pose,Hip-Side Lying Fix,Banana Saddle,Driftwood Fold,0
+Yoga,yin,Swirl Pose,Supported Sphinx,Dragon Side Bend,Supine Deer,Pigeon Sleeping,0
+Yoga,yin,Melting Heart Twist,Half-Shoelace,Bridge Butterfly,Supported Frog,Rag Doll Drape,0
+Yoga,yin,Supported Plow,Reclined Dragonfly,Yin Camel,Toe Stretch,Compass Support,0
+Yoga,restorative,Bolster Twist Arch,Supported Lizard,Blanket Butterfly,Low-Back Cradle,Supported Gate Pose,0
+Yoga,restorative,Elevated Legs Cradle,Bolster-Held Heart,Sandbag Belly Rest,Head-to-Bolster Fold,Side-Body Stretch,0
+Yoga,restorative,Bolster-Supported Child,Lying Crescent,Rest-Seat Pose,Bolster-Egg Pose,Pillow-Knees Hug,0
+Yoga,restorative,Wall Puppy Support,Rested Warrior,Savasana with Sandbag,Blanket-Roll Bridge,Side-Savasana Curl,0
+Yoga,restorative,Bolster-Under-Shoulder Fish,Supported Bound Angle,Eye-Pillow Savasana,Knee-Support Twist,Bolster-Mountain,0
+Yoga,power,Double-Knee Drive Plank,Handstand Wall-Kick,Jump-Switch Crescent,Power Skater Lunge,Boat V-Up,1
+Yoga,power,Core Bear Hover,Push-Up to Side-Crow,Explosive Chair Jump,Crow to Tripod Headstand,L-Sit Arm Lift,1
+Yoga,power,Chaturanga Push-Clap,Runner’s Jump Switch,Hovering Dolphin,Warrior III Row,Dragon Hop Squat,1
+Yoga,power,Suspended Split Pulse,Bound Side Plank,Forearm Stand Kick,Power Half-Moon,Jump-Switch Skandasana,1
+Yoga,power,Inversion Pike Press,Corkscrew Push-up,Plank Jack Push,Power Boat Twist,Down-Dog Donkey Kick,1
+
