@@ -292,27 +292,7 @@ body {
   border-top: 1px solid #333;
 }
 
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  color: white;
-  font-size: 0.9rem;
-}
 
-.legend-circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-}
-
-.legend-circle.today {
-  border: 2px solid #0056ff;
-}
-
-.legend-circle.completed {
-  background: #0056ff;
-}
 
 /* Loading Spinner */
 .loading-container {
@@ -370,4 +350,200 @@ body {
 }
 .calendar-day.clickable:active {
   box-shadow: 0 0 0 4px #2563ebaa;
+}
+
+
+.calendar-day.full-blue {
+  background-color: #1e90ff;
+  color: white;
+}
+
+.calendar-day.half-blue {
+  background: linear-gradient(to top, #1e90ff 50%, #eaeaea 50%);
+  color: black;
+}
+
+
+.legend-row {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-circle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.legend-circle.today {
+  background-color: transparent;
+  border: 2px solid #1e90ff;
+}
+
+.legend-circle.full-blue {
+  background-color: #1e90ff;
+}
+
+.legend-circle.half-blue {
+  background: linear-gradient(to top, #1e90ff 50%, white 50%);
+}
+
+/* new */
+
+/* Dashboard Container */
+.dashboard-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #000;
+}
+
+/* Calendar Scroll */
+.calendar-scroll-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+/* Calendar Section */
+.calendar-section {
+  background: #1f1c1c3f;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Calendar Title */
+.calendar-month-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.day-header {
+  font-weight: bold;
+  text-align: center;
+  color: #0056ff;
+  padding: 5px 0;
+}
+
+/* Day Cell */
+.calendar-day {
+  height: 50px;
+  background-color: #9ea5c7b2;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.calendar-day.empty {
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.calendar-day .day-number {
+  z-index: 2;
+}
+
+/* Today Marker */
+.calendar-day.today {
+  border: 5px solid #0056ff;
+  box-shadow: 0 0 0 2px #cce5ff;
+  background-color: #9ea5c7b2 !important;
+}
+
+/* 100% Completed Day */
+.calendar-day.full-blue {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* 50% Completed Day */
+.calendar-day.half-blue {
+  background: linear-gradient(
+    to top,
+    #007bff 50%,
+    #e0e0e0 50%
+  );
+  color: #fff;
+}
+
+/* Legend */
+.legend-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+
+/* Legend Circle Types */
+.legend-circle.today {
+  border: 2px solid #007bff;
+  background-color: #9ea5c7b2;
+}
+
+.legend-circle.full-blue {
+  background-color: #007bff;
+}
+
+.legend-circle.half-blue {
+  background: linear-gradient(to top, #007bff 50%, #e0e0e0 50%);
+}
+
+/* Spinner */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #007bff;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
