@@ -9,6 +9,9 @@ import UpdateUserSelectionPage from './pages/SelectionPage';
 import FitnessListPage from './pages/FitnessListPage';
 import MeditationListPage from './pages/MeditationListPage';
 import YogaListPage from './pages/YogaListPage';
+import WorkoutFitness from './pages/WorkoutFitness';
+import WorkoutMeditation from './pages/WorkoutMeditation';
+import WorkoutYoga from './pages/WorkoutYoga';
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
         <Route path="/fitness" element={<FitnessListPage />} />
         <Route path="/meditation" element={<MeditationListPage />} />
         <Route path="/yoga" element={<YogaListPage />} />
+        <Route path="/workout_fitness" element={<WorkoutFitness />} />
+        <Route path="/workout_meditation" element={<WorkoutMeditation />} />
+        <Route path="/workout_yoga" element={<WorkoutYoga />} />
       </Routes>
     </Router>
   );
