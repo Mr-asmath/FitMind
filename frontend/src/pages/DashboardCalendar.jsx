@@ -84,14 +84,18 @@ const ImageSlider = () => {
 
   return (
     <div className="slider-container">
+      <br />
       <div className="slider-track">
+        
         {images.map((src, idx) => (
           <div key={idx} className={getClass(idx)}>
             <img src={src} alt={`Slide ${idx + 1}`} className="w-full h-auto rounded" />
           </div>
         ))}
       </div>
+      
       <div className="slider-dots">
+        <br />
         {images.map((_, idx) => (
           <span
             key={idx}
@@ -110,10 +114,11 @@ const ImageSlider = () => {
 const Dashboard = () => {
   const [currentDate] = useState(new Date());
   const [activityType, setActivityType] = useState('');
+  const [completedMap, setCompletedMap] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch user preferences
+  // Fetch user preferences and completion status
   useEffect(() => {
     const fetchUserPreferences = async () => {
       const device_id = localStorage.getItem('device_id');
@@ -121,11 +126,24 @@ const Dashboard = () => {
         navigate('/login');
         return;
       }
-      
+
       try {
         const response = await fetch(`http://localhost:5000/api/user/preferences?device_id=${device_id}`);
         const data = await response.json();
         setActivityType(data.activity_type || '');
+
+        // Parse completed field like "2025-06-27_fitness_100,2025-06-25_fitness_50"
+        const completedStr = data.completed || '';
+          const map = {};
+          completedStr.split(',').forEach(entry => {
+            const clean = entry.trim();
+            const match = clean.match(/^(\d{4}-\d{2}-\d{2})_fitness_(\d{2,3})$/);
+            if (match) {
+              const [_, date, percent] = match;
+              map[date] = parseInt(percent, 10);
+            }
+          });
+          setCompletedMap(map);
       } catch (err) {
         console.error('Error fetching preferences:', err);
       } finally {
@@ -136,24 +154,17 @@ const Dashboard = () => {
     fetchUserPreferences();
   }, [navigate]);
 
-  // Redirect to activity page
   const redirectToActivityPage = () => {
     const routeMap = {
       fitness: '/fitness',
       meditation: '/meditation',
       yoga: '/yoga',
     };
-    
-    const route = routeMap[activityType?.toLowerCase()] || '/select-activities';
-    navigate(route);
+    navigate(routeMap[activityType?.toLowerCase()] || '/select-activities');
   };
 
-  // Handle date click (only works for today)
-  const handleDateClick = () => {
-    redirectToActivityPage();
-  };
+  const handleDateClick = () => redirectToActivityPage();
 
-  // Generate calendar for month/year
   const generateCalendar = (year, month) => {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -162,25 +173,27 @@ const Dashboard = () => {
     const calendar = [];
     let day = 1;
 
-    // Empty slots
     for (let i = 0; i < firstDay; i++) {
-      calendar.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+      calendar.push(<div key={`empty-${i}`} className="calendar-day empty" />);
     }
 
-    // Days of the month
     for (; day <= daysInMonth; day++) {
-      const clickedDate = new Date(year, month, day);
-      const isToday = clickedDate.toDateString() === today.toDateString();
+      const currentDay = new Date(year, month, day);
+      const isoDate = currentDay.toISOString().split('T')[0];
+      const isToday = currentDay.toDateString() === today.toDateString();
+      const completion = completedMap[isoDate];
+
+      let className = "calendar-day";
+      if (isToday) className += " today";
+      if (completion === 100) className += " full-blue";
+      else if (completion === 50) className += " half-blue";
 
       calendar.push(
         <div
           key={`day-${day}`}
-          className={`calendar-day${isToday ? ' today' : ''}`}
+          className={className}
           onClick={isToday ? handleDateClick : undefined}
-          style={{
-            cursor: isToday ? 'pointer' : 'default',
-            opacity: isToday ? 1 : 0.5,
-          }}
+          style={{ cursor: isToday ? 'pointer' : 'default' }}
           tabIndex={isToday ? 0 : -1}
           role={isToday ? 'button' : undefined}
           aria-disabled={!isToday}
@@ -199,7 +212,6 @@ const Dashboard = () => {
     return calendar;
   };
 
-  // Current and next month details
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   const nextMonthDate = new Date(year, month + 1, 1);
@@ -207,11 +219,7 @@ const Dashboard = () => {
   const nextYear = nextMonthDate.getFullYear();
 
   if (isLoading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-      </div>
-    );
+    return <div className="loading-container"><div className="spinner" /></div>;
   }
 
   return (
@@ -219,50 +227,28 @@ const Dashboard = () => {
       <ImageSlider />
 
       <div className="calendar-scroll-container">
-        {/* Current Month */}
-        <div className="calendar-section">
-          <h2 className="calendar-month-title">
-            {currentDate.toLocaleString('default', { month: 'long' })} {year}
-          </h2>
-          <div className="calendar-grid">
-            <div className="day-header">Sun</div>
-            <div className="day-header">Mon</div>
-            <div className="day-header">Tue</div>
-            <div className="day-header">Wed</div>
-            <div className="day-header">Thu</div>
-            <div className="day-header">Fri</div>
-            <div className="day-header">Sat</div>
-            {generateCalendar(year, month)}
-          </div>
-        </div>
-
-        {/* Next Month */}
-        <div className="calendar-section">
-          <h2 className="calendar-month-title">
-            {nextMonthDate.toLocaleString('default', { month: 'long' })} {nextYear}
-          </h2>
-          <div className="calendar-grid">
-            <div className="day-header">Sun</div>
-            <div className="day-header">Mon</div>
-            <div className="day-header">Tue</div>
-            <div className="day-header">Wed</div>
-            <div className="day-header">Thu</div>
-            <div className="day-header">Fri</div>
-            <div className="day-header">Sat</div>
-            {generateCalendar(nextYear, nextMonth)}
-          </div>
-        </div>
+        {[0, 1].map((offset) => {
+          const displayDate = new Date(year, month + offset, 1);
+          return (
+            <div className="calendar-section" key={offset}>
+              <h2 className="calendar-month-title">
+                {displayDate.toLocaleString('default', { month: 'long' })} {displayDate.getFullYear()}
+              </h2>
+              <div className="calendar-grid">
+                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
+                  <div className="day-header" key={d}>{d}</div>
+                ))}
+                {generateCalendar(displayDate.getFullYear(), displayDate.getMonth())}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      <div class="legend-row">
-        <div class="legend-item">
-          <div class="legend-circle today"></div>
-          <span>Today</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-circle completed"></div>
-          <span>Completed</span>
-        </div>
+      <div className="legend-row">
+        <div className="legend-item"><div className="legend-circle today" /> <span>Today</span></div>
+        <div className="legend-item"><div className="legend-circle full-blue" /> <span>100% Completed</span></div>
+        <div className="legend-item"><div className="legend-circle half-blue" /> <span>50% Completed</span></div>
       </div>
     </div>
   );
