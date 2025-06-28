@@ -308,5 +308,32 @@ def meditation():
 def yoga():
     return jsonify({'available': True})
 
+
+@app.route('/api/user/update_completed', methods=['POST'])
+def update_completed():
+    data = request.get_json()
+    device_id = data.get('device_id')
+    completed_value = data.get('completed')
+
+    if not device_id or not completed_value:
+        return jsonify({'error': 'Missing device_id or completed'}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users WHERE device_id = ?", (device_id,))
+    user = cursor.fetchone()
+
+    if not user:
+        conn.close()
+        return jsonify({'error': 'User not found'}), 404
+
+    cursor.execute("UPDATE users SET completed = ? WHERE device_id = ?", (completed_value, device_id))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'message': 'Completed status updated successfully'}), 200
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
