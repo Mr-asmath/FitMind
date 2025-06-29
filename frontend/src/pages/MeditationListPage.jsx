@@ -1,212 +1,238 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const MeditationListPage = () => {
-  const [selections, setSelections] = useState([]);
-  const [recommendations, setRecommendations] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+const WorkoutMeditation = () => {
+  const [exerciseList, setExerciseList] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [phase, setPhase] = useState('ready'); // 'ready', 'workout', 'rest', 'done'
+  const [timer, setTimer] = useState(5);
+  const [skippedExercises, setSkippedExercises] = useState(0);
   const navigate = useNavigate();
+  const device_id = localStorage.getItem('device_id');
 
-  const fetchWithErrorHandling = async (url) => {
-    const response = await fetch(url);
-    const contentType = response.headers.get('content-type');
-
-    if (!contentType || !contentType.includes('application/json')) {
-      const text = await response.text();
-      throw new Error(`Invalid response: ${text.substring(0, 100)}`);
-    }
-
-    return response.json();
-  };
-
+  // Fetch recommended meditations
   useEffect(() => {
-    const fetchData = async () => {
-      const device_id = localStorage.getItem('device_id');
-      if (!device_id) {
-        navigate('/login');
-        return;
-      }
+    if (!device_id) return navigate('/login');
 
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const prefData = await fetchWithErrorHandling(
-          `http://localhost:5000/api/user/preferences?device_id=${device_id}`
-        );
-
-        if (prefData.activity_type !== 'meditation') {
+    fetch(`http://localhost:5000/api/user/recommendations?device_id=${device_id}`)
+      .then(res => res.json())
+      .then(data => {
+        const allExercises = Object.values(data.recommendations || {}).flat();
+        if (allExercises.length === 0) {
+          alert('No meditations found. Please update your preferences.');
           navigate('/select-activities');
           return;
         }
+        setExerciseList(allExercises);
+        setCurrentIndex(0);
+        setPhase('ready');
+        setTimer(5);
+      })
+      .catch(err => {
+        console.error('Error fetching meditation list:', err);
+        navigate('/meditation');
+      });
+  }, [device_id, navigate]);
 
-        const focusAreas = JSON.parse(prefData.meditation_focus || '[]');
-        setSelections(focusAreas);
+  // Timer handling
+  useEffect(() => {
+    if (currentIndex >= exerciseList.length) {
+      setPhase('done');
+      updateCompletionStatus();
+      return;
+    }
 
-        const recData = await fetchWithErrorHandling(
-          `http://localhost:5000/api/user/recommendations?device_id=${device_id}`
-        );
+    if (phase === 'done') return;
 
-        setRecommendations(recData.recommendations || {});
-      } catch (err) {
-        console.error('API Error:', err);
-        setError(
-          err.message.includes('Invalid response')
-            ? 'Server returned incorrect format'
-            : err.message
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    const interval = setInterval(() => {
+      setTimer(prev => {
+        if (prev === 1) {
+          clearInterval(interval);
+          handleNextPhase();
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
-    fetchData();
-  }, [navigate]);
+    return () => clearInterval(interval);
+  }, [phase, currentIndex]);
 
-  const speak = (text) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
+  const handleNextPhase = () => {
+    if (phase === 'ready') {
+      setPhase('workout');
+      setTimer(60);
+    } else if (phase === 'workout') {
+      setPhase('rest');
+      setTimer(10);
+    } else if (phase === 'rest') {
+      setCurrentIndex(prev => prev + 1);
+      setPhase('ready');
+      setTimer(5);
+    }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading your meditation program...</p>
-        </div>
-      </div>
-    );
-  }
+  const skipRest = () => {
+    if (phase === 'rest') handleNextPhase();
+  };
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-md max-w-md w-full text-center">
-          <h2 className="text-xl font-bold text-red-500 mb-2">Error</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <div className="space-y-3">
-            <button
-              onClick={() => window.location.reload()}
-              className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-            >
-              Try Again
-            </button>
-            <button
-              onClick={() => navigate('/select-activities')}
-              className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition"
-            >
-              Change Preferences
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const skipWorkout = () => {
+    if (phase === 'workout') {
+      setSkippedExercises(prev => prev + 1);
+      setPhase('rest');
+      setTimer(10);
+    }
+  };
 
-  return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Your Meditation Program</h1>
-          <p className="mt-3 text-xl text-gray-500">
-            Mindful and calming sessions based on your preferences
-          </p>
-          <button
-            onClick={() => navigate('/workout_meditation')}
-            className="mt-6 px-6 py-3 bg-green-600 text-white rounded-md text-lg hover:bg-green-700 transition"
-          >
-            Start Meditation
-          </button>
-        </div>
+  const restartExercise = () => {
+    setPhase('ready');
+    setTimer(5);
+  };
 
-        {/* Focus Areas */}
-        <div className="bg-white shadow rounded-lg overflow-hidden mb-8">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-medium text-gray-900">Your Focus Areas</h2>
-          </div>
-          <div className="px-6 py-4">
-            <div className="flex flex-wrap gap-2">
-              {selections.map((selection) => (
-                <span
-                  key={selection}
-                  className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full capitalize"
-                >
-                  {selection.replace('_', ' ')}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+  const getSanitizedImagePath = (exerciseName) => {
+    if (!exerciseName) return '';
+    const sanitized = exerciseName
+      .toLowerCase()
+      .replace(/[^\w\s]/gi, '')
+      .replace(/\s+/g, '_');
+    return `/assets/images/meditation_${sanitized}.jpg`; // e.g. meditation_mindfulness.jpg
+  };
 
-        {/* Meditation Instructions */}
-        {Object.keys(recommendations).length > 0 ? (
-          <div className="space-y-6">
-            {Object.entries(recommendations).map(([focusArea, exercises]) => (
-              <div key={focusArea} className="bg-white shadow rounded-lg overflow-hidden">
-                <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900 capitalize">
-                    {focusArea.replace('_', ' ')} Meditation Sessions
-                  </h3>
-                </div>
-                <ul className="divide-y divide-gray-200">
-                  {exercises.map((exercise, index) => (
-                    <li
-                      key={`${focusArea}-${index}`}
-                      className="px-6 py-4 flex items-start gap-4 hover:bg-gray-50 transition"
-                    >
-                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{exercise}</p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          Find a quiet place, sit comfortably, and breathe deeply for a few minutes.
-                        </p>
-                        <button
-                          onClick={() => speak(`Meditation for ${exercise}. Breathe deeply and stay present.`)}
-                          className="mt-1 text-blue-600 text-sm underline hover:text-blue-800"
-                        >
-                          🔊 Speak Instruction
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white shadow rounded-lg overflow-hidden p-6 text-center">
-            <p className="text-gray-500">No meditation sessions found.</p>
-            <button
-              onClick={() => navigate('/select-activities')}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-            >
-              Select Focus Areas
-            </button>
-          </div>
-        )}
+  const updateCompletionStatus = async () => {
+    const total = exerciseList.length;
+    const completedCount = total - skippedExercises;
+    const percent = Math.round((completedCount / total) * 100);
+    const today = new Date().toISOString().split('T')[0];
+    const value = `${today}_meditation_${percent}`;
 
-        {/* Navigation Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-          <button
-            onClick={() => navigate('/select-activities')}
-            className="px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-          >
-            Change Preferences
-          </button>
-          <button
-            onClick={() => navigate('/dashboard-calendar')}
-            className="px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-          >
+    try {
+      await fetch('http://localhost:5000/api/user/update_completed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ device_id, completed: value })
+      });
+      console.log('Meditation completion updated:', value);
+    } catch (err) {
+      console.error('Error updating meditation completion:', err);
+    }
+  };
+
+  const renderContent = () => {
+    if (phase === 'done') {
+      return (
+        <div style={{ textAlign: 'center' }}>
+          <h2>🧘 Meditation Complete! Well done!</h2>
+          <button onClick={() => navigate('/dashboard-calendar')} style={{ marginTop: '20px' }}>
             Back to Dashboard
           </button>
         </div>
+      );
+    }
+
+    if (currentIndex === -1 || !exerciseList[currentIndex]) {
+      return <h2 style={{ textAlign: 'center' }}>Loading...</h2>;
+    }
+
+    const currentExercise = exerciseList[currentIndex];
+    const imagePath = getSanitizedImagePath(currentExercise);
+
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h2>
+          {phase === 'ready' && `Get Ready: ${currentExercise}`}
+          {phase === 'workout' && `Meditate: ${currentExercise}`}
+          {phase === 'rest' && 'Rest & Breathe'}
+        </h2>
+
+        <h1 style={{ fontSize: '4rem', margin: '20px 0' }}>{timer}</h1>
+
+        {(phase === 'workout' || phase === 'ready') && imagePath && (
+          <img
+            src={imagePath}
+            alt={currentExercise}
+            style={{
+              width: '480px',
+              height: '270px',
+              objectFit: 'cover',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
+            }}
+          />
+        )}
+
+        {/* Music suggestion */}
+        {phase === 'workout' && (
+          <div style={{ marginBottom: '20px' }}>
+            <p style={{ fontStyle: 'italic' }}>🌿 Optional: Play calming music in the background using Spotify, YouTube, or your favorite music app.</p>
+            <a
+              href="https://open.spotify.com/search/meditation"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#1db954',
+                color: '#fff',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                fontWeight: 'bold'
+              }}
+            >
+              🎵 Open Spotify
+            </a>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+          {phase === 'rest' && <button onClick={skipRest}>⏭ Skip Rest</button>}
+          {phase === 'workout' && (
+            <>
+              <button onClick={skipWorkout}>⏩ Skip Meditation</button>
+              <button onClick={restartExercise}>🔁 Restart</button>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#e8f5e9',
+      padding: '2rem',
+      position: 'relative'
+    }}>
+      <button
+        onClick={() => navigate('/dashboard-calendar')}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          backgroundColor: '#f44336',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '5px',
+          padding: '10px 16px',
+          fontWeight: 'bold',
+          cursor: 'pointer'
+        }}
+      >
+        ❌ Quit
+      </button>
+
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: 'calc(100vh - 60px)',
+        background: '#000',
+        borderRadius: '12px',
+        padding: '2rem'
+      }}>
+        {renderContent()}
       </div>
     </div>
   );
 };
 
-export default MeditationListPage;
+export default WorkoutMeditation;
