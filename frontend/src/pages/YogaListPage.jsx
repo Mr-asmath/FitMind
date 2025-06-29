@@ -69,8 +69,6 @@ const YogaListPage = () => {
     speechSynthesis.speak(utterance);
   };
 
-  let videoCounter = 1;
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -113,7 +111,7 @@ const YogaListPage = () => {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Your Yoga Program</h1>
           <p className="mt-3 text-xl text-gray-500">
-            Mindful and calming sessions based on your preferences
+            Mindful and energizing sessions based on your preferences
           </p>
           <button
             onClick={() => navigate('/workout_yoga')}
@@ -142,7 +140,7 @@ const YogaListPage = () => {
           </div>
         </div>
 
-        {/* Yoga Exercises */}
+        {/* Yoga Instructions */}
         {Object.keys(recommendations).length > 0 ? (
           <div className="space-y-6">
             {Object.entries(recommendations).map(([focusArea, exercises]) => (
@@ -153,42 +151,30 @@ const YogaListPage = () => {
                   </h3>
                 </div>
                 <ul className="divide-y divide-gray-200">
-                  {exercises.map((exercise, index) => {
-                    const videoPath = `/assets/videos/Yoga_video${videoCounter}.mp4`;
-                    const item = (
-                      <li
-                        key={`${focusArea}-${index}`}
-                        className="px-6 py-4 flex flex-col md:flex-row md:items-center gap-4 hover:bg-gray-50 transition"
-                      >
-                        <video
-                          className="w-full md:w-1/2 rounded border"
-                          controls
-                          preload="metadata"
+                  {exercises.map((exercise, index) => (
+                    <li
+                      key={`${focusArea}-${index}`}
+                      className="px-6 py-4 flex items-start gap-4 hover:bg-gray-50 transition"
+                    >
+                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                        {index + 1}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{exercise}</p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Begin in a relaxed seated or standing posture. Focus on your breath, gently stretch into the pose, and hold for a few breaths while maintaining steady awareness.
+                        </p>
+                        <button
+                          onClick={() =>
+                            speak(`Yoga pose: ${exercise}. Breathe deeply and hold the posture mindfully.`)
+                          }
+                          className="mt-1 text-blue-600 text-sm underline hover:text-blue-800"
                         >
-                          <source src={videoPath} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                        <div className="flex items-center md:w-1/2">
-                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                            {index + 1}
-                          </div>
-                          <div className="ml-4">
-                            <p className="text-sm font-medium text-gray-900">{exercise}</p>
-                            <p className="text-sm text-gray-500 mt-1">Relax and breathe deeply</p>
-                            <button
-                              onClick={() => speak(exercise)}
-                              className="mt-1 text-blue-600 text-sm underline hover:text-blue-800"
-                            >
-                              🔊
-                            </button>
-                          </div>
-                        </div>
-                      </li>
-                    );
-
-                    videoCounter += 1;
-                    return item;
-                  })}
+                          🔊 Speak Instruction
+                        </button>
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
