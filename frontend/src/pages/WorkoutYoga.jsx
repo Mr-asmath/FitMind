@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const WorkoutYoga = () => {
@@ -7,7 +7,6 @@ const WorkoutYoga = () => {
   const [phase, setPhase] = useState('ready'); // 'ready', 'workout', 'rest', 'done'
   const [timer, setTimer] = useState(5);
   const [skippedExercises, setSkippedExercises] = useState(0);
-  const videoRef = useRef(null);
   const navigate = useNavigate();
   const device_id = localStorage.getItem('device_id');
 
@@ -35,7 +34,7 @@ const WorkoutYoga = () => {
       });
   }, [device_id, navigate]);
 
-  // Timer handler
+  // Timer logic
   useEffect(() => {
     if (currentIndex >= exerciseList.length) {
       setPhase('done');
@@ -57,20 +56,10 @@ const WorkoutYoga = () => {
     return () => clearInterval(interval);
   }, [phase, currentIndex]);
 
-  // Play/pause video based on phase
-  useEffect(() => {
-    if ((phase === 'workout' || phase === 'ready') && videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    } else if (videoRef.current) {
-      videoRef.current.pause();
-    }
-  }, [phase, currentIndex]);
-
   const handleNextPhase = () => {
     if (phase === 'ready') {
       setPhase('workout');
-      setTimer(30); // Yoga phase can be 30s
+      setTimer(30); // Yoga pose for 30s
     } else if (phase === 'workout') {
       setPhase('rest');
       setTimer(10);
@@ -98,13 +87,13 @@ const WorkoutYoga = () => {
     setTimer(5);
   };
 
-  const getSanitizedVideoPath = (exerciseName) => {
+  const getSanitizedImagePath = (exerciseName) => {
     if (!exerciseName) return '';
     const sanitized = exerciseName
       .toLowerCase()
       .replace(/[^\w\s]/gi, '')
       .replace(/\s+/g, '_');
-    return `/assets/videos/yoga_${sanitized}_video.mp4`;
+    return `/assets/images/yoga_${sanitized}.jpg`;
   };
 
   const updateCompletionStatus = async () => {
@@ -143,7 +132,7 @@ const WorkoutYoga = () => {
     }
 
     const currentExercise = exerciseList[currentIndex];
-    const videoPath = getSanitizedVideoPath(currentExercise);
+    const imagePath = getSanitizedImagePath(currentExercise);
 
     return (
       <div style={{ textAlign: 'center' }}>
@@ -155,18 +144,43 @@ const WorkoutYoga = () => {
 
         <h1 style={{ fontSize: '4rem', margin: '20px 0' }}>{timer}</h1>
 
-        {(phase === 'workout' || phase === 'ready') && videoPath && (
-          <video
-            ref={videoRef}
-            width="480"
-            height="270"
-            controls={false}
-            muted
-            style={{ borderRadius: '8px', marginBottom: '20px' }}
-          >
-            <source src={videoPath} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        {(phase === 'workout' || phase === 'ready') && imagePath && (
+          <img
+            src={imagePath}
+            alt={currentExercise}
+            style={{
+              width: '480px',
+              height: '270px',
+              objectFit: 'cover',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
+            }}
+          />
+        )}
+
+        {/* Music Suggestion Section */}
+        {phase === 'workout' && (
+          <div style={{ marginBottom: '20px' }}>
+            <p style={{ fontStyle: 'italic' }}>
+              🎵 Optional: Play calming music from Spotify, YouTube Music, or your favorite app during the pose.
+            </p>
+            <a
+              href="https://open.spotify.com/search/yoga"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#1db954',
+                color: '#fff',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                fontWeight: 'bold'
+              }}
+            >
+              🎧 Open Spotify
+            </a>
+          </div>
         )}
 
         <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
@@ -195,7 +209,7 @@ const WorkoutYoga = () => {
           position: 'absolute',
           top: '20px',
           right: '20px',
-          backgroundColor: '#ff4d4f',
+          backgroundColor: '#f44336',
           color: '#fff',
           border: 'none',
           borderRadius: '5px',
@@ -213,6 +227,8 @@ const WorkoutYoga = () => {
         alignItems: 'center',
         minHeight: 'calc(100vh - 60px)',
         background: '#000',
+        borderRadius: '12px',
+        padding: '2rem'
       }}>
         {renderContent()}
       </div>
