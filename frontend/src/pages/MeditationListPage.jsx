@@ -69,8 +69,6 @@ const MeditationListPage = () => {
     speechSynthesis.speak(utterance);
   };
 
-  let videoCounter = 1;
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -142,7 +140,7 @@ const MeditationListPage = () => {
           </div>
         </div>
 
-        {/* Meditation Exercises */}
+        {/* Meditation Instructions */}
         {Object.keys(recommendations).length > 0 ? (
           <div className="space-y-6">
             {Object.entries(recommendations).map(([focusArea, exercises]) => (
@@ -153,42 +151,28 @@ const MeditationListPage = () => {
                   </h3>
                 </div>
                 <ul className="divide-y divide-gray-200">
-                  {exercises.map((exercise, index) => {
-                    const videoPath = `/assets/videos/meditation_video${videoCounter}.mp4`;
-                    const item = (
-                      <li
-                        key={`${focusArea}-${index}`}
-                        className="px-6 py-4 flex flex-col md:flex-row md:items-center gap-4 hover:bg-gray-50 transition"
-                      >
-                        <video
-                          className="w-full md:w-1/2 rounded border"
-                          controls
-                          preload="metadata"
+                  {exercises.map((exercise, index) => (
+                    <li
+                      key={`${focusArea}-${index}`}
+                      className="px-6 py-4 flex items-start gap-4 hover:bg-gray-50 transition"
+                    >
+                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                        {index + 1}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{exercise}</p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Find a quiet place, sit comfortably, and breathe deeply for a few minutes.
+                        </p>
+                        <button
+                          onClick={() => speak(`Meditation for ${exercise}. Breathe deeply and stay present.`)}
+                          className="mt-1 text-blue-600 text-sm underline hover:text-blue-800"
                         >
-                          <source src={videoPath} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                        <div className="flex items-center md:w-1/2">
-                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                            {index + 1}
-                          </div>
-                          <div className="ml-4">
-                            <p className="text-sm font-medium text-gray-900">{exercise}</p>
-                            <p className="text-sm text-gray-500 mt-1">Relax and breathe deeply</p>
-                            <button
-                              onClick={() => speak(exercise)}
-                              className="mt-1 text-blue-600 text-sm underline hover:text-blue-800"
-                            >
-                              🔊
-                            </button>
-                          </div>
-                        </div>
-                      </li>
-                    );
-
-                    videoCounter += 1;
-                    return item;
-                  })}
+                          🔊 Speak Instruction
+                        </button>
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
