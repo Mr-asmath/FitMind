@@ -247,8 +247,8 @@ const Dashboard = () => {
 
       <div className="legend-row">
         <div className="legend-item"><div className="legend-circle today" /> <span>Today</span></div>
-        <div className="legend-item"><div className="legend-circle full-blue" /> <span>100% Completed</span></div>
         <div className="legend-item"><div className="legend-circle half-blue" /> <span>50% Completed</span></div>
+        <div className="legend-item"><div className="legend-circle full-blue" /> <span>100% Completed</span></div>
       </div>
     </div>
   );
