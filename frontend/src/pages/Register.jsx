@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaUser,FaArrowLeft , FaBirthdayCake, FaHashtag, FaRulerVertical, FaWeight, FaEnvelope, FaLock, FaPhone, FaHome } from 'react-icons/fa';
 import './Register.css';
 
 function Register() {
@@ -19,7 +20,6 @@ function Register() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  // Validate step 1 (basic info)
   const validateStep1 = () => {
     const newErrors = {};
     if (!formData.username.trim()) newErrors.username = 'Username is required';
@@ -30,7 +30,6 @@ function Register() {
     return newErrors;
   };
 
-  // Validate step 2 (account info)
   const validateStep2 = () => {
     const newErrors = {};
     if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
@@ -54,7 +53,6 @@ function Register() {
       ...formData,
       [name]: value
     });
-    // Clear error when user types
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -85,7 +83,6 @@ function Register() {
     }
 
     setIsSubmitting(true);
-    
     try {
       const response = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
@@ -94,17 +91,9 @@ function Register() {
       });
 
       const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Registration failed');
-      }
-
-      // Store device ID for automatic login
+      if (!response.ok) throw new Error(data.error || 'Registration failed');
       localStorage.setItem('device_id', data.device_id);
-      
-      // Navigate to selection page with fallback
       navigate('/select-activities') || window.location.assign('/select-activities');
-      
     } catch (err) {
       setErrors({ form: err.message });
     } finally {
@@ -112,150 +101,59 @@ function Register() {
     }
   };
 
+  const renderInput = (name, type, placeholder, Icon) => (
+    <div className="form-group">
+      <div className="input-icon">
+        <Icon className="icon" />
+        <input
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={formData[name]}
+          onChange={handleChange}
+          className={errors[name] ? 'error' : ''}
+          required
+        />
+      </div>
+      {errors[name] && <div className="error-message">{errors[name]}</div>}
+    </div>
+  );
+
   return (
-    <div className="auth-container">
-      <h2>Register (Step {step}/2)</h2>
-      {errors.form && <div className="error-message">{errors.form}</div>}
-      
-      {step === 1 ? (
-        <form noValidate className={step === 1 ? '' : 'slide-left'}>
-          <div className="form-group">
-            <label>Username</label>
-            <input
-              name="username"
-              placeholder=" "
-              autoComplete="off"
-              value={formData.username}
-              onChange={handleChange}
-              className={errors.username ? 'error' : ''}
-              required
-            />
-            {errors.username && <div className="error-message">{errors.username}</div>}
-          </div>
-          
-          <div className="form-group">
-            <label>Date of Birth</label>
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              className={errors.dob ? 'error' : ''}
-              required
-            />
-            {errors.dob && <div className="error-message">{errors.dob}</div>}
-          </div>
-          
-          <div className="form-group">
-            <label>Age</label>
-            <input
-              type="number"
-              name="age"
-              min="1"
-              value={formData.age}
-              onChange={handleChange}
-              className={errors.age ? 'error' : ''}
-              required
-            />
-            {errors.age && <div className="error-message">{errors.age}</div>}
-          </div>
-          
-          <div className="form-group">
-            <label>Height (cm)</label>
-            <input
-              type="number"
-              name="height"
-              min="1"
-              step="0.1"
-              value={formData.height}
-              onChange={handleChange}
-              className={errors.height ? 'error' : ''}
-              required
-            />
-            {errors.height && <div className="error-message">{errors.height}</div>}
-          </div>
-          
-          <div className="form-group">
-            <label>Weight (kg)</label>
-            <input
-              type="number"
-              name="weight"
-              min="1"
-              step="0.1"
-              value={formData.weight}
-              onChange={handleChange}
-              className={errors.weight ? 'error' : ''}
-              required
-            />
-            {errors.weight && <div className="error-message">{errors.weight}</div>}
-          </div>
-          
-          <button type="button" onClick={nextStep} className="next-button">
-            Continue
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={handleSubmit} noValidate className={step === 2 ? '' : 'slide-left'}>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={errors.email ? 'error' : ''}
-              required
-            />
-            {errors.email && <div className="error-message">{errors.email}</div>}
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className={errors.password ? 'error' : ''}
-              required
-            />
-            {errors.password && <div className="error-message">{errors.password}</div>}
-          </div>
-          
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className={errors.phone ? 'error' : ''}
-              required
-            />
-            {errors.phone && <div className="error-message">{errors.phone}</div>}
-          </div>
-          
-          <div className="form-group">
-            <label>Address</label>
-            <input
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className={errors.address ? 'error' : ''}
-              required
-            />
-            {errors.address && <div className="error-message">{errors.address}</div>}
-          </div>
-          
-          <div className="form-actions">
-            <button type="button" onClick={prevStep} className="back-button">
-              Back
-            </button>
-            <button type="submit" disabled={isSubmitting} className="submit-button">
-              {isSubmitting ? 'Registering...' : 'Complete Registration'}
-            </button>
-          </div>
-        </form>
-      )}
+    <div className="body1">
+      <header></header>
+      <div className="auth-container" style={{ background: 'rgba(255, 255, 255, 0.08)', marginTop: '50px', width: '80%' }}>
+        <h2>Register (Step {step}/2)</h2>
+        {errors.form && <div className="error-message">{errors.form}</div>}
+        {step === 1 ? (
+          <form noValidate className={step === 1 ? '' : 'slide-left'}>
+            {renderInput('username', 'text', 'Username', FaUser)}
+            {renderInput('dob', 'date', '', FaBirthdayCake)}
+            {renderInput('age', 'number', 'Age', FaHashtag)}
+            {renderInput('height', 'number', 'Height (cm)', FaRulerVertical)}
+            {renderInput('weight', 'number', 'Weight (kg)', FaWeight)}
+            <button type="button" onClick={nextStep} className="next-button">Continue</button>
+          </form>
+        ) : (
+          <form onSubmit={handleSubmit} noValidate className={step === 2 ? '' : 'slide-left'}>
+            {renderInput('email', 'email', 'Email', FaEnvelope)}
+            {renderInput('password', 'password', 'Password', FaLock)}
+            {renderInput('phone', 'tel', 'Phone', FaPhone)}
+            {renderInput('address', 'text', 'Address', FaHome)}
+            <div className="form-actions">
+              <button type="button" onClick={prevStep} className="back-button" title="Go Back" style={{
+                width:'50px',
+                borderRadius:'2rem'
+              }}> <FaArrowLeft /></button>
+              <button type="submit" disabled={isSubmitting} className="submit-button" style={{
+                width:'150px'
+              }}>
+                {isSubmitting ? 'Registering...' : 'Sumbit'}
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
