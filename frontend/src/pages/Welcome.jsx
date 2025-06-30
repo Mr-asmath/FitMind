@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Welcome.css";
+import "../index.css"
+import "../input.css"
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -42,10 +44,11 @@ export default function Welcome() {
   }, []);
 
   return (
-    <div className="welcome-bg">
+    <div className="welcome-bg bg-green-500 text-red-600">
+      <img className="img_logo" src="./logo2.png"></img>
       <div className="welcome-card">
         <h1 ref={titleRef} className="welcome-title">
-          AI‑Powered <span className="highlight">Fitness</span> Companion
+          AI‑Powered <span className="highlight text-red-500">Fitness</span> Companion
         </h1>
         <p ref={subtitleRef} className="welcome-subtitle">
           Your journey to a healthier life starts <span className="highlight">now</span>
