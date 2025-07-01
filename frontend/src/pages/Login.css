@@ -1,14 +1,17 @@
 /* Login.css */
-.body{
+
+.body {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: url('./login_image.jpg') fixed no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
   align-items: center;
   justify-content: center;
 }
 
-.body header{
-  background:url('./logo2.png') no-repeat;
+.body header {
+  background: url('./logo2.png') no-repeat;
   background-size: 100px;
   background-color: #cbd5e1;
   height: 50px;
@@ -16,73 +19,118 @@
 
 /* Main container */
 .auth-container {
-  max-width: 300px;
-  margin: 0;
+  max-width: 350px;
+  width: 80%;
   padding: 40px 30px;
-  background: white;
-  backdrop-filter: blur(1px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(2px);
   border-radius: 2rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 50px;
 }
 
 /* Header */
 .auth-container h2 {
   font-size: 2rem;
   margin-bottom: 24px;
-  color: red;
+  color: #3b82f6;
 }
 
 /* Error message */
 .error {
-  color: #dc2626; /* Tailwind red-600 */
-  background-color: #fee2e2; /* red-100 */
+  color: #dc2626;
+  background-color: #fee2e2;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 16px;
   font-size: 0.95rem;
+  text-align: center;
 }
 
-/* Form elements */
+/* Form layout */
 .auth-container form {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  margin-top: 20px;
 }
 
 /* Input fields */
-.auth-container input {
-  padding: 12px 14px;
-  width: 70%;
+.input-icon {
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid #0056ff;
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.input-icon .icon {
+  font-size: 18px;
+  color: #357ab8;
+  margin-right: 0px;
+}
+
+.input-icon input {
+  flex: 1;
   border: none;
-  font-size: 1rem; /* slate-300 */
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+  color: #000;
+}
+
+.auth-container .input {
+  padding: 12px 14px;
+  width: 100%;
+  font-size: 1rem;
   background-color: transparent;
+  border: none;
   border-bottom: 3px solid #0056ff;
   transition: border-color 0.3s;
+  animation: input_animate 2s infinite;
 }
 
-.auth-container input:focus {
-  border-color: #0056ff; /* green-600 */
+@keyframes input_animate {
+  0% {
+    border-bottom: 3px solid #0000ff;
+  }
+  25% {
+    border-bottom: 3px solid #0056ff;
+  }
+  50% {
+    border-bottom: 3px solid #3490ff;
+  }
+  75% {
+    border-bottom: 3px solid #1456ff;
+  }
+  100% {
+    border-bottom: 3px solid #0000ff;
+  }
+}
+
+.auth-container .input:focus {
+  border:none;
   outline: none;
-  box-shadow: #4623ff;
+
 }
 
-.auth-container input::placeholder {
+.auth-container .input:active{
+  border:none;
+}
+
+.auth-container .input::placeholder {
   color: #000;
   font-size: 1.1rem;
 }
 
-.auth-container input:hover{
-  border-radius: 2rem;
-  border:2px solid #0056ff;
-}
-
 /* Submit button */
-.auth-container button {
+.auth-container .submit-button {
   padding: 12px 14px;
-  width: 40%;
+  width: 0;
   font-size: 1rem;
   font-weight: 600;
   background-color: #0056ff;
@@ -90,19 +138,19 @@
   border: none;
   border-radius: 2rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.auth-container button:hover {
-  background-color: #3465ff;
-  transform: scale(1.05); /* darker green */
-  box-shadow: #3465ff;
+.auth-container  .submit-button:hover {
+  background: #fff;
+  transform: scale(1.05);
+  color: #357ab8;
+  box-shadow: 0 0 8px rgba(52, 101, 255, 0.6);
 }
 
-/* Disabled button state */
-.auth-container button:disabled,
-.auth-container .loading {
-  background-color: #9ca3af; /* gray-400 */
+.submit-button:disabled,
+.loading {
+  background-color: #9ca3af;
   cursor: not-allowed;
 }
 
@@ -110,7 +158,7 @@
 .auth-container p {
   margin-top: 20px;
   font-size: 1.2rem;
-  color: #000; /* gray-600 */
+  color: #000;
 }
 
 .auth-container a {
@@ -120,6 +168,6 @@
 }
 
 .auth-container a:hover {
-  color:#3718d4;
+  color: #3718d4;
   text-decoration: underline;
 }
