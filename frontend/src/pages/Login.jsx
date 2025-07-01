@@ -56,7 +56,7 @@ function Login() {
   );
 
   return (
-    <div className="body">
+    <div className="body2">
       <header></header>
       <div className="auth-container">
         <h2>Login</h2>
@@ -70,9 +70,6 @@ function Login() {
             type="submit"
             className={`submit-button ${isLoading ? 'loading' : ''}`}
             disabled={isLoading}
-            style={{
-              width:'40%'
-            }}
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
