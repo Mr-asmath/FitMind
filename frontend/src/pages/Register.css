@@ -1,12 +1,13 @@
 /* Register.css */
 
 
-.body1 {
-  min-height: 100vh;
+.body1{
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 120vh; /* Full screen height */
+  width: 100vw;  /* Full screen width */
   background: url('./register.jpg') fixed no-repeat;
   background-size: 100% 100%;
 }
@@ -17,7 +18,7 @@
   justify-content: center;
   background: white;
   padding: 40px 30px;
-  border-radius: 12px;
+  border-radius: 2rem;
   backdrop-filter: blur(2px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   width: 70%;
@@ -207,13 +208,13 @@ form.slide-left {
   border: none;
 }
 
-.back-button {
+.auth-container1 .back-button {
   position: absolute; /* Must be absolute to align inside container */
   top: 20px;
   left: 20px;
-  background: #0056ff;
+  background: #4a90e2;
   border: none;
-  font-size: 24px;
+  font-size: 15px;
   color: white;
   cursor: pointer;
   z-index: 10;
@@ -226,12 +227,12 @@ form.slide-left {
   transition: background 0.3s ease;
 }
 
-.back-button:hover {
+.auth-container1 .back-button:hover {
   color: #357ab8;
   background-color: #fff;
 }
 
-.submit-button {
+.auth-container1 .submit-button {
   margin-top: 20px;
   background-color: #4a90e2;
   color: white;
@@ -243,7 +244,7 @@ form.slide-left {
   border-radius: 2rem;
 }
 
-.submit-button:hover {
+.auth-container1 .submit-button:hover {
   background-color: white;
   color: #357ab8;
 }
