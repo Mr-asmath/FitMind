@@ -194,7 +194,7 @@ const UpdateUserSelectionPage = () => {
               }}
               className="back-button"
             >
-              &larr; Back to Activities
+              &larr;Back 
             </button>
             <div className="current-activity">
               {currentActivity.icon} {currentActivity.name}
