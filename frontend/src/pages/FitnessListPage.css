@@ -1,0 +1,489 @@
+
+.page-container {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: none;
+  padding: 2rem;
+  box-sizing: border-box;
+  background: url('./fitness.jpg') fixed no-repeat;
+  background-size: 100% 100%;
+}
+
+.content-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.fitness-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.fitness-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.fitness-header p {
+  margin-top: 0.75rem;
+  font-size: 1.25rem;
+  color: #6b7280;
+}
+
+.fitness-header button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fitness-header button:hover {
+  background-color: #15803d;
+}
+
+/* Focus Areas */
+.focus-areas {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.focus-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.focus-header h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.focus-list {
+  padding: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.focus-item {
+  padding: 0.5rem 1rem;
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  text-transform: capitalize;
+}
+
+/* Recommendations Section */
+.recommendation-section {
+  margin-bottom: 2rem;
+}
+
+.exercise-group {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.exercise-header {
+  padding: 1rem 1.5rem;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.exercise-header h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1f2937;
+  text-transform: capitalize;
+}
+.exercise-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/*.exercise-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  border: 2px solid #fff;
+  margin: 10px 0;
+  border-radius: 2rem;
+  backdrop-filter: blur(2px);
+  transition: background-color 0.2s ease-in;
+}*/
+
+/* By default, stacked layout for small screens */
+/*.exercise-video {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  margin: 0 auto;
+}*/
+
+.exercise-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/*.exercise-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+} */
+
+/* Responsive layout for wider screens */
+@media (min-width: 760px) {
+  .exercise-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .exercise-video {
+    width: 45%;
+    max-width: 400px;
+  }
+
+  .exercise-info {
+    width: 50%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Error and Loading Screens */
+.center-screen {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-box,
+.loading-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.error-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ef4444;
+  margin-bottom: 0.5rem;
+}
+
+.error-message {
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.error-actions button {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.error-actions .retry {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.error-actions .retry:hover {
+  background-color: #2563eb;
+}
+
+.error-actions .change {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.error-actions .change:hover {
+  background-color: #e5e7eb;
+}
+
+/* Footer Buttons */
+.footer-nav {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-nav button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.footer-nav .change-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.footer-nav .change-btn:hover {
+  background-color: #1e40af;
+}
+
+.footer-nav .back-btn {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.footer-nav .back-btn:hover {
+  background-color: #f3f4f6;
+}
+.header-section{
+    align-items: center;
+    justify-items: center;
+}
+.start-button{
+    color:#000;
+    background-color: #fff;
+    position: relative;
+
+}
+
+.start-button:hover{
+    color: #fff;
+    background-color: #000;
+    border:2px solid #fff;
+}
+
+/* Main container fixed at bottom */
+.focus-section {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background-color: #374151;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+  margin-top: 20px;
+}
+
+/* Tag box */
+.focus-tags {
+  background-color: #374151;
+  color: white;
+  padding: 6px 12px;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  width: 150px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Additional box or buttons */
+.focus-section > div:nth-child(2) {
+  background-color: rgb(100, 97, 97);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recommendation-list{
+    background-color: none;
+}
+
+.recommendation-list:hover{
+    background-color: none;
+}
+
+.recommendation-box{
+    justify-items: center;
+    background-color: none;
+}
+
+.recommendation-box:hover{
+    background-color: none;
+}
+
+.recommendation-header{
+    background-color: #6d747e;
+    justify-items: center;
+    width: 150px;
+    height: 30px;
+    margin: 10px;
+    padding-bottom: 2px;
+    border-radius: 2rem;
+    background-size:100%;
+}
+
+.recommendation-header > h3:nth-child(1){
+    position: relative;
+    font-size: 100%;
+}
+
+.exercise-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 2px solid #fff;
+  margin: 10px 0;
+  padding: 1rem;
+  border-radius: 2rem;
+  backdrop-filter: blur(2px);
+  height: 100%;
+}
+
+/* Responsive layout */
+@media (min-width: 760px) {
+  .exercise-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+ .exercise-video {
+    width: 45%;
+    max-width: 400px;
+  }
+
+  .exercise-info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Video styling */
+.exercise-video {
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  height:300px;
+  width: 100%;
+}
+
+/* Instructions */
+.exercise-instructions {
+  background-color: #f3f4f6;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #d1d5db;
+}
+
+.exercise-instructions ul {
+  margin: 0.5rem 0 0 1rem;
+  padding-left: 1rem;
+  list-style-type: disc;
+}
+
+.exercise-instructions p{
+  color:#000;
+}
+
+.exercise-instructions li {
+  font-size: 0.9rem;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+/* Details (title, sets, button) */
+.exercise-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.exercise-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.exercise-sets {
+  font-size: 0.9rem;
+  color: #b3b9c5;
+}
+
+.speak-button {
+  font-size: 1.25rem;
+  color: #2563eb;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.speak-button:hover {
+  color: #1d4ed8;
+  background-color: #000;
+  border:2px solid #fff;
+}
+
+.back-button {
+    background: #ffffff10;
+    color: var(--text-secondary);
+    font-weight: 500;
+    border: 0.3px solid #00bcd4;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    margin: 15px;
+    transition: color 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .back-button:hover {
+    background-color: #0096a929;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 53, 212, 0.264);  
+  }
