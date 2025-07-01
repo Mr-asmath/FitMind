@@ -102,7 +102,10 @@ function Register() {
   };
 
   const renderInput = (name, type, placeholder, Icon) => (
-    <div className="form-group">
+    <div className="form-group" style={{
+      alignItems:'center',
+      justifyContent:'center'
+    }}>
       <div className="input-icon">
         <Icon className="icon" />
         <input
@@ -122,33 +125,81 @@ function Register() {
   return (
     <div className="body1">
       <header></header>
-      <div className="auth-container" style={{ background: 'rgba(255, 255, 255, 0.08)', marginTop: '50px', width: '80%' }}>
+      <div
+        className="auth-container1"
+        style={{
+          background: 'rgba(255, 255, 255, 0.08)',
+          marginTop: '50px',
+          width: '50%',
+          alignItems:'center'
+          
+        }}
+      >
         <h2>Register (Step {step}/2)</h2>
         {errors.form && <div className="error-message">{errors.form}</div>}
+
         {step === 1 ? (
-          <form noValidate className={step === 1 ? '' : 'slide-left'}>
+          <form noValidate className={step === 1 ? '' : 'slide-left'} style={{
+            alignItems:'center',
+            justifyContent:'center',
+            justifyItems:'center'
+          }}>
             {renderInput('username', 'text', 'Username', FaUser)}
             {renderInput('dob', 'date', '', FaBirthdayCake)}
             {renderInput('age', 'number', 'Age', FaHashtag)}
             {renderInput('height', 'number', 'Height (cm)', FaRulerVertical)}
             {renderInput('weight', 'number', 'Weight (kg)', FaWeight)}
-            <button type="button" onClick={nextStep} className="next-button">Continue</button>
+
+            <button type="button" onClick={nextStep} className="next-button">
+              Continue
+            </button>
+            
           </form>
         ) : (
-          <form onSubmit={handleSubmit} noValidate className={step === 2 ? '' : 'slide-left'}>
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            className={step === 2 ? '' : 'slide-left'}
+            style={{
+              alignItems:'center',
+              justifyItems:'center',
+              justifyContent:'center'
+            }}
+          >
             {renderInput('email', 'email', 'Email', FaEnvelope)}
             {renderInput('password', 'password', 'Password', FaLock)}
             {renderInput('phone', 'tel', 'Phone', FaPhone)}
             {renderInput('address', 'text', 'Address', FaHome)}
+
             <div className="form-actions">
-              <button type="button" onClick={prevStep} className="back-button" title="Go Back" style={{
-                width:'50px',
-                borderRadius:'2rem'
-              }}> <FaArrowLeft /></button>
-              <button type="submit" disabled={isSubmitting} className="submit-button" style={{
-                width:'150px'
-              }}>
-                {isSubmitting ? 'Registering...' : 'Sumbit'}
+              <button
+                type="button"
+                onClick={prevStep}
+                className="back-button"
+                title="Go Back"
+                style={{
+                  width: '50px',
+                  borderRadius: '2rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: '8px',
+                  background:'#0056ff'
+                }}
+              >
+                <FaArrowLeft />
+              </button>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="submit-button"
+                style={{
+                  width: '150px',
+                  borderRadius:'2rem'
+                }}
+              >
+                {isSubmitting ? 'Registering...' : 'Submit'}
               </button>
             </div>
           </form>
