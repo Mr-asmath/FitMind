@@ -169,7 +169,7 @@ const UpdateUserSelectionPage = () => {
 
       {!selectedActivity ? (
         <div className="activity-selection">
-          <h2>Choose an Activity</h2>
+          <h2 className='h2'>Choose an Activity</h2>
           <div className="activity-grid">
             {activityOptions.map(activity => (
               <button
@@ -194,7 +194,7 @@ const UpdateUserSelectionPage = () => {
               }}
               className="back-button"
             >
-              &larr; Back to Activities
+              &larr;Back 
             </button>
             <div className="current-activity">
               {currentActivity.icon} {currentActivity.name}
