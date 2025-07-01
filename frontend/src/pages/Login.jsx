@@ -1,5 +1,7 @@
+// Login.jsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
 import './Login.css';
 
 function Login() {
@@ -36,58 +38,51 @@ function Login() {
     }
   };
 
+  const renderInput = (type, placeholder, value, onChange, Icon) => (
+    <div className="form-group">
+      <div className="input-icon">
+        <Icon className="icon" />
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          required
+          className="input"
+          autoComplete={type === 'password' ? 'current-password' : 'username'}
+        />
+      </div>
+    </div>
+  );
+
   return (
     <div className="body">
       <header></header>
-      <div className="auth-container" 
-      style={{
-        background: 'rgba(255, 255, 255, 0.08)',
-        marginTop: '50px',
-        width:'50%'
-        }}>
-          <h2 style={{
-            color:'#3b82f6'
-          }}>Login</h2>
+      <div className="auth-container">
+        <h2>Login</h2>
+        {error && <p className="error">{error}</p>}
 
-          {error && <p className="error">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          {renderInput('email', 'Email', email, (e) => setEmail(e.target.value), FaEnvelope)}
+          {renderInput('password', 'Password', password, (e) => setPassword(e.target.value), FaLock)}
 
-          <form onSubmit={handleSubmit}>
+          <button
+            type="submit"
+            className={`submit-button ${isLoading ? 'loading' : ''}`}
+            disabled={isLoading}
+            style={{
+              width:'40%'
+            }}
+          >
+            {isLoading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
 
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="username"
-            />
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete="current-password"
-            />
-
-            <button
-              type="submit"
-              className={isLoading ? 'loading' : ''}
-              disabled={isLoading}
-            >
-              {isLoading ? '' : 'Login'}
-            </button>
-
-          </form>
-
-          <p>
-            Don't have an account?{' '}
-            <Link to="/register">Register</Link>
-          </p>
-        </div>
+        <p>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      </div>
     </div>
-    
   );
 }
 
