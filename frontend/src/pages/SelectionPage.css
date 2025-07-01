@@ -246,7 +246,11 @@
       text-align: center;
       text-decoration: none;
       display: inline-block;
+      position: relative;
+      left: 35%;
+      margin-top: 20px;
     }
+
 
     .submit-button:hover {
       background: linear-gradient(135deg, #00aaff, #007BFF);
