@@ -8,44 +8,40 @@
   align-items: center;
   justify-content: center;
   background: url('./register.jpg') fixed no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 
-.auth-container {
+.auth-container1 {
   position: relative;
+  align-items: center;
+  justify-content: center;
   background: white;
   padding: 40px 30px;
   border-radius: 12px;
+  backdrop-filter: blur(2px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  width: 100%;
+  width: 70%;
   max-width: 500px;
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
-.auth-container {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  width: 100%;
-  max-width: 500px;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-}
 
-.auth-container h2 {
+
+.auth-container1 h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  color: #357ab8;
 }
 
-.form-group {
+.auth-container1 .form-group {
   margin-bottom: 20px;
   position: relative;
+  align-items: center;
+  justify-content: center;
 }
 
-.auth-container label{
+.auth-container1 label{
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
@@ -54,7 +50,7 @@
   right: 50%;
 }
 
-.auth-container input{
+.auth-container1 input{
   padding: 12px 14px;
   min-width:50%;
   border: none;
@@ -62,22 +58,45 @@
   background: transparent;
   border-bottom: 3px solid #0056ff;
   transition: border-color 0.3s;
+  animation: input_animate 2s infinite;
 }
 
-.auth-container input:hover{
+/* Use @keyframes instead of @media */
+@keyframes input_animate {
+  0% {
+    border-bottom: 3px solid #0000ff;
+  }
+  25% {
+    border-bottom: 3px solid #0056ff;
+  }
+  50% {
+    border-bottom: 3px solid #3490ff;
+  }
+  75% {
+    border-bottom: 3px solid #1456ff;
+  }
+  100% {
+    border-bottom: 3px solid #0000ff;
+  }
+}
+
+.auth-container1 input:hover{
   background-color: transparent;
   border: none;
 }
 
+.auth-container1 input::placeholder{
+  color: #000;
+}
 
 
-.auth-container input:focus {
-  border-color: #4a90e2;
+.auth-container1 input:focus {
+  border-color: #000;
   outline: none;
   background-color: transparent;
 }
 
-.auth-container input:active{
+.auth-container1 input:active{
   background-color: transparent;
 }
 
@@ -104,6 +123,9 @@ button {
   background-color: #4a90e2;
   color: white;
   width: 100%;
+  align-items: center;
+  position: relative;
+  border-radius: 2rem;
 }
 
 
@@ -150,7 +172,7 @@ form.slide-left {
   align-items: center;
   background: none;
   border: none;
-  border-bottom: 2px solid #357ab8;
+  border-bottom: none;
   width:250px;
   padding: 8px 10px;
 }
@@ -166,6 +188,15 @@ form.slide-left {
 .input-icon .icon {
   font-size: 18px;
   color: #357ab8;
+  background-color: #fff;
+  padding: 13px;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+}
+
+.input-icon .icon:hover{
+  background-color: #357ab8;
+  color:#fff;
 }
 
 .input-icon input.error {
@@ -177,28 +208,29 @@ form.slide-left {
 }
 
 .back-button {
-  position: absolute;
+  position: absolute; /* Must be absolute to align inside container */
   top: 20px;
   left: 20px;
-  background: none;
+  background: #0056ff;
   border: none;
   font-size: 24px;
-  color: #4a90e2;
+  color: white;
   cursor: pointer;
   z-index: 10;
-  width:100px;
-  transition: color 0.3s ease;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
 }
 
 .back-button:hover {
   color: #357ab8;
+  background-color: #fff;
 }
 
-/* Ensure .auth-container is relatively positioned so the back button can sit inside it */
-
-
-
-/* Improve submit-button spacing and alignment */
 .submit-button {
   margin-top: 20px;
   background-color: #4a90e2;
@@ -208,9 +240,10 @@ form.slide-left {
   text-align: center;
   padding: 12px 0;
   font-weight: bold;
+  border-radius: 2rem;
 }
 
 .submit-button:hover {
-  background-color: #357ab8;
-  color: #fff;
+  background-color: white;
+  color: #357ab8;
 }
