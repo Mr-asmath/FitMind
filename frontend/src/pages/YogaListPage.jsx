@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './YogaListPage.css';
 
 const YogaListPage = () => {
   const [selections, setSelections] = useState([]);
@@ -71,32 +72,24 @@ const YogaListPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading your yoga program...</p>
-        </div>
+      <div className="loading-screen">
+        <div className="spinner"></div>
+        <p className="loading-text">Loading your yoga program...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-md max-w-md w-full text-center">
-          <h2 className="text-xl font-bold text-red-500 mb-2">Error</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <div className="space-y-3">
-            <button
-              onClick={() => window.location.reload()}
-              className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-            >
+      <div className="error-screen">
+        <div className="error-card">
+          <h2 className="error-title">Error</h2>
+          <p className="error-message">{error}</p>
+          <div className="error-actions">
+            <button onClick={() => window.location.reload()} className="btn-primary">
               Try Again
             </button>
-            <button
-              onClick={() => navigate('/select-activities')}
-              className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition"
-            >
+            <button onClick={() => navigate('/select-activities')} className="btn-secondary">
               Change Preferences
             </button>
           </div>
@@ -106,71 +99,57 @@ const YogaListPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Your Yoga Program</h1>
-          <p className="mt-3 text-xl text-gray-500">
+    <div className="yoga-container">
+      <div className="yoga-inner">
+        <div className="yoga-header">
+          <h1 className="page-title">Your Yoga Program</h1>
+          <p className="page-subtitle">
             Mindful and energizing sessions based on your preferences
           </p>
-          <button
-            onClick={() => navigate('/workout_yoga')}
-            className="mt-6 px-6 py-3 bg-green-600 text-white rounded-md text-lg hover:bg-green-700 transition"
-          >
+          <button onClick={() => navigate('/workout_yoga')} className="primary-button">
             Start Yoga
           </button>
         </div>
 
-        {/* Focus Areas */}
-        <div className="bg-white shadow rounded-lg overflow-hidden mb-8">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-medium text-gray-900">Your Focus Areas</h2>
-          </div>
-          <div className="px-6 py-4">
-            <div className="flex flex-wrap gap-2">
-              {selections.map((selection) => (
-                <span
-                  key={selection}
-                  className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full capitalize"
-                >
-                  {selection.replace('_', ' ')}
-                </span>
-              ))}
-            </div>
+        <div className="focus-section">
+          <h2>Your Focus Areas</h2>
+          <div className="focus-tags" style={{
+            background:'transparent',
+          }}>
+            {selections.map((selection) => (
+              <span key={selection} className="focus-tag">
+                {selection.replace('_', ' ')}
+              </span>
+            ))}
           </div>
         </div>
 
-        {/* Yoga Instructions */}
         {Object.keys(recommendations).length > 0 ? (
-          <div className="space-y-6">
+          <div className="sessions-section">
             {Object.entries(recommendations).map(([focusArea, exercises]) => (
-              <div key={focusArea} className="bg-white shadow rounded-lg overflow-hidden">
-                <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900 capitalize">
-                    {focusArea.replace('_', ' ')} Yoga Sessions
-                  </h3>
+              
+              <div key={focusArea} className="session-card">
+                <div className="session-title">
+                  {focusArea.replace('_', ' ')} Yoga Sessions
                 </div>
-                <ul className="divide-y divide-gray-200">
+                <ul className="session-list">
                   {exercises.map((exercise, index) => (
-                    <li
-                      key={`${focusArea}-${index}`}
-                      className="px-6 py-4 flex items-start gap-4 hover:bg-gray-50 transition"
-                    >
-                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                        {index + 1}
-                      </div>
+                    <li key={`${focusArea}-${index}`} className="session-item">
+                      <div className="session-count">{index + 1}</div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{exercise}</p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          Begin in a relaxed seated or standing posture. Focus on your breath, gently stretch into the pose, and hold for a few breaths while maintaining steady awareness.
+                        <p className="session-name">{exercise}</p>
+                        <p className="session-instruction">
+                          Begin in a relaxed seated or standing posture. Focus on your breath,
+                          gently stretch into the pose, and hold for a few breaths while
+                          maintaining steady awareness.
                         </p>
                         <button
                           onClick={() =>
                             speak(`Yoga pose: ${exercise}. Breathe deeply and hold the posture mindfully.`)
                           }
-                          className="mt-1 text-blue-600 text-sm underline hover:text-blue-800"
+                          className="primary-button"
                         >
-                          🔊 Speak Instruction
+                          🎧
                         </button>
                       </div>
                     </li>
@@ -180,28 +159,27 @@ const YogaListPage = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white shadow rounded-lg overflow-hidden p-6 text-center">
-            <p className="text-gray-500">No yoga sessions found.</p>
+          <div className="no-sessions">
+            <p>No yoga sessions found.</p>
             <button
               onClick={() => navigate('/select-activities')}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+              className="primary-button"
             >
               Select Focus Areas
             </button>
           </div>
         )}
 
-        {/* Navigation Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        <div className="navigation-buttons">
           <button
             onClick={() => navigate('/select-activities')}
-            className="px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+            className="primary-button"
           >
             Change Preferences
           </button>
           <button
             onClick={() => navigate('/dashboard-calendar')}
-            className="px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+            className="primary-button"
           >
             Back to Dashboard
           </button>
