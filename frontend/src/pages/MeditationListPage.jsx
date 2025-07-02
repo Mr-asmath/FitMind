@@ -1,238 +1,161 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './MeditationListPage.css';
 
-const WorkoutMeditation = () => {
-  const [exerciseList, setExerciseList] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(-1);
-  const [phase, setPhase] = useState('ready'); // 'ready', 'workout', 'rest', 'done'
-  const [timer, setTimer] = useState(5);
-  const [skippedExercises, setSkippedExercises] = useState(0);
+const MeditationListPage = () => {
+  const [selections, setSelections] = useState([]);
+  const [recommendations, setRecommendations] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const device_id = localStorage.getItem('device_id');
 
-  // Fetch recommended meditations
+  const fetchWithErrorHandling = async (url) => {
+    const response = await fetch(url);
+    const contentType = response.headers.get('content-type');
+
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      throw new Error(`Invalid response: ${text.substring(0, 100)}`);
+    }
+
+    return response.json();
+  };
+
   useEffect(() => {
-    if (!device_id) return navigate('/login');
+    const fetchData = async () => {
+      const device_id = localStorage.getItem('device_id');
+      if (!device_id) {
+        navigate('/login');
+        return;
+      }
 
-    fetch(`http://localhost:5000/api/user/recommendations?device_id=${device_id}`)
-      .then(res => res.json())
-      .then(data => {
-        const allExercises = Object.values(data.recommendations || {}).flat();
-        if (allExercises.length === 0) {
-          alert('No meditations found. Please update your preferences.');
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const prefData = await fetchWithErrorHandling(
+          `http://localhost:5000/api/user/preferences?device_id=${device_id}`
+        );
+
+        if (prefData.activity_type !== 'meditation') {
           navigate('/select-activities');
           return;
         }
-        setExerciseList(allExercises);
-        setCurrentIndex(0);
-        setPhase('ready');
-        setTimer(5);
-      })
-      .catch(err => {
-        console.error('Error fetching meditation list:', err);
-        navigate('/meditation');
-      });
-  }, [device_id, navigate]);
 
-  // Timer handling
-  useEffect(() => {
-    if (currentIndex >= exerciseList.length) {
-      setPhase('done');
-      updateCompletionStatus();
-      return;
-    }
+        const focusAreas = JSON.parse(prefData.meditation_focus || '[]');
+        setSelections(focusAreas);
 
-    if (phase === 'done') return;
+        const recData = await fetchWithErrorHandling(
+          `http://localhost:5000/api/user/recommendations?device_id=${device_id}`
+        );
 
-    const interval = setInterval(() => {
-      setTimer(prev => {
-        if (prev === 1) {
-          clearInterval(interval);
-          handleNextPhase();
-        }
-        return prev - 1;
-      });
-    }, 1000);
+        setRecommendations(recData.recommendations || {});
+      } catch (err) {
+        console.error('API Error:', err);
+        setError(
+          err.message.includes('Invalid response')
+            ? 'Server returned incorrect format'
+            : err.message
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    return () => clearInterval(interval);
-  }, [phase, currentIndex]);
+    fetchData();
+  }, [navigate]);
 
-  const handleNextPhase = () => {
-    if (phase === 'ready') {
-      setPhase('workout');
-      setTimer(60);
-    } else if (phase === 'workout') {
-      setPhase('rest');
-      setTimer(10);
-    } else if (phase === 'rest') {
-      setCurrentIndex(prev => prev + 1);
-      setPhase('ready');
-      setTimer(5);
-    }
+  const speak = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(utterance);
   };
 
-  const skipRest = () => {
-    if (phase === 'rest') handleNextPhase();
-  };
-
-  const skipWorkout = () => {
-    if (phase === 'workout') {
-      setSkippedExercises(prev => prev + 1);
-      setPhase('rest');
-      setTimer(10);
-    }
-  };
-
-  const restartExercise = () => {
-    setPhase('ready');
-    setTimer(5);
-  };
-
-  const getSanitizedImagePath = (exerciseName) => {
-    if (!exerciseName) return '';
-    const sanitized = exerciseName
-      .toLowerCase()
-      .replace(/[^\w\s]/gi, '')
-      .replace(/\s+/g, '_');
-    return `/assets/images/meditation_${sanitized}.jpg`; // e.g. meditation_mindfulness.jpg
-  };
-
-  const updateCompletionStatus = async () => {
-    const total = exerciseList.length;
-    const completedCount = total - skippedExercises;
-    const percent = Math.round((completedCount / total) * 100);
-    const today = new Date().toISOString().split('T')[0];
-    const value = `${today}_meditation_${percent}`;
-
-    try {
-      await fetch('http://localhost:5000/api/user/update_completed', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ device_id, completed: value })
-      });
-      console.log('Meditation completion updated:', value);
-    } catch (err) {
-      console.error('Error updating meditation completion:', err);
-    }
-  };
-
-  const renderContent = () => {
-    if (phase === 'done') {
-      return (
-        <div style={{ textAlign: 'center' }}>
-          <h2>🧘 Meditation Complete! Well done!</h2>
-          <button onClick={() => navigate('/dashboard-calendar')} style={{ marginTop: '20px' }}>
-            Back to Dashboard
-          </button>
-        </div>
-      );
-    }
-
-    if (currentIndex === -1 || !exerciseList[currentIndex]) {
-      return <h2 style={{ textAlign: 'center' }}>Loading...</h2>;
-    }
-
-    const currentExercise = exerciseList[currentIndex];
-    const imagePath = getSanitizedImagePath(currentExercise);
-
+  if (isLoading) {
     return (
-      <div style={{ textAlign: 'center' }}>
-        <h2>
-          {phase === 'ready' && `Get Ready: ${currentExercise}`}
-          {phase === 'workout' && `Meditate: ${currentExercise}`}
-          {phase === 'rest' && 'Rest & Breathe'}
-        </h2>
+      <div className="loader-container">
+        <div className="loader"></div>
+        <p className="loader-text">Loading your meditation program...</p>
+      </div>
+    );
+  }
 
-        <h1 style={{ fontSize: '4rem', margin: '20px 0' }}>{timer}</h1>
-
-        {(phase === 'workout' || phase === 'ready') && imagePath && (
-          <img
-            src={imagePath}
-            alt={currentExercise}
-            style={{
-              width: '480px',
-              height: '270px',
-              objectFit: 'cover',
-              borderRadius: '12px',
-              marginBottom: '20px',
-              boxShadow: '0 4px 10px rgba(0,0,0,0.2)'
-            }}
-          />
-        )}
-
-        {/* Music suggestion */}
-        {phase === 'workout' && (
-          <div style={{ marginBottom: '20px' }}>
-            <p style={{ fontStyle: 'italic' }}>🌿 Optional: Play calming music in the background using Spotify, YouTube, or your favorite music app.</p>
-            <a
-              href="https://open.spotify.com/search/meditation"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#1db954',
-                color: '#fff',
-                textDecoration: 'none',
-                borderRadius: '8px',
-                fontWeight: 'bold'
-              }}
-            >
-              🎵 Open Spotify
-            </a>
+  if (error) {
+    return (
+      <div className="error-container">
+        <div className="error-box">
+          <h2 className="error-title">Error</h2>
+          <p className="error-message">{error}</p>
+          <div className="error-buttons">
+            <button onClick={() => window.location.reload()}>Try Again</button>
+            <button onClick={() => navigate('/select-activities')}>Change Preferences</button>
           </div>
-        )}
-
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-          {phase === 'rest' && <button onClick={skipRest}>⏭ Skip Rest</button>}
-          {phase === 'workout' && (
-            <>
-              <button onClick={skipWorkout}>⏩ Skip Meditation</button>
-              <button onClick={restartExercise}>🔁 Restart</button>
-            </>
-          )}
         </div>
       </div>
     );
-  };
+  }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#e8f5e9',
-      padding: '2rem',
-      position: 'relative'
-    }}>
-      <button
-        onClick={() => navigate('/dashboard-calendar')}
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          backgroundColor: '#f44336',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '5px',
-          padding: '10px 16px',
-          fontWeight: 'bold',
-          cursor: 'pointer'
-        }}
-      >
-        ❌ Quit
-      </button>
+    <div className="meditation-wrapper">
+      <div className="meditation-container">
+        <div className="meditation-header">
+          <h1>Your Meditation Program</h1>
+          <p>Mindful and calming sessions based on your preferences</p>
+          <button onClick={() => navigate('/workout_meditation')} className="primary-button">
+            Start Meditation
+          </button>
+        </div>
 
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: 'calc(100vh - 60px)',
-        background: '#000',
-        borderRadius: '12px',
-        padding: '2rem'
-      }}>
-        {renderContent()}
+        <div className="focus-section">
+          <h2>Your Focus Areas</h2>
+          <div className="focus-tags" style={{
+            background:'transparent',
+          }}>
+            {selections.map((selection) => (
+              <span key={selection} className="focus-tag">
+                {selection.replace('_', ' ')}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {Object.keys(recommendations).length > 0 ? (
+          <div className="session-section">
+            {Object.entries(recommendations).map(([focusArea, exercises]) => (
+              <div key={focusArea} className="session-box">
+                <h3>{focusArea.replace('_', ' ')} Meditation Sessions</h3>
+                <ul className="session-list">
+                  {exercises.map((exercise, index) => (
+                    <li key={`${focusArea}-${index}`} className="session-item">
+                      <div className="session-count1">{index + 1}</div>
+                      <div className="session-info">
+                        <p className="session-title1">{exercise}</p>
+                        <p className="session-desc">
+                          Find a quiet place, sit comfortably, and breathe deeply for a few minutes.
+                        </p>
+                        <button className='primary-button' onClick={() => speak(`Meditation for ${exercise}. Breathe deeply and stay present.`)}>
+                          🔊
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-section">
+            <p>No meditation sessions found.</p>
+            <button onClick={() => navigate('/select-activities')}>Select Focus Areas</button>
+          </div>
+        )}
+
+        <div className="footer-buttons">
+          <button className='primary-button' onClick={() => navigate('/select-activities')}>Change Preferences</button>
+          <button className='primary-button' onClick={() => navigate('/dashboard-calendar')}>Back to Dashboard</button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default WorkoutMeditation;
+export default MeditationListPage;
