@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './WorkoutFitness.css';
 
 const WorkoutFitness = () => {
   const [exerciseList, setExerciseList] = useState([]);
@@ -24,7 +25,7 @@ const WorkoutFitness = () => {
           navigate('/select-activities');
           return;
         }
-        setExerciseList(allExercises);
+        setExerciseList(allExercises.slice(0, 10)); // Limit to 10 exercises
         setCurrentIndex(0);
         setPhase('ready');
         setTimer(5);
@@ -96,15 +97,6 @@ const WorkoutFitness = () => {
     setTimer(5);
   };
 
-  const getSanitizedVideoPath = (exerciseName) => {
-    if (!exerciseName) return '';
-    const sanitized = exerciseName
-      .toLowerCase()
-      .replace(/[^\w\s]/gi, '')
-      .replace(/\s+/g, '_');
-    return `/assets/videos/fitness_${sanitized}_video.mp4`;
-  };
-
   const updateCompletionStatus = async () => {
     const total = exerciseList.length;
     const completedCount = total - skippedExercises;
@@ -130,9 +122,9 @@ const WorkoutFitness = () => {
   const renderContent = () => {
     if (phase === 'done') {
       return (
-        <div style={{ textAlign: 'center' }}>
+        <div className="workout-complete">
           <h2>🏁 Workout Complete! Great Job!</h2>
-          <button onClick={() => navigate('/dashboard-calendar')} style={{ marginTop: '20px' }}>
+          <button onClick={() => navigate('/dashboard-calendar')}>
             Back to Dashboard
           </button>
         </div>
@@ -140,44 +132,36 @@ const WorkoutFitness = () => {
     }
 
     if (currentIndex === -1 || !exerciseList[currentIndex]) {
-      return <h2 style={{ textAlign: 'center' }}>Loading...</h2>;
+      return <h2 className="loading-message">Loading...</h2>;
     }
 
+    const videoCount = currentIndex + 1;
+    const videoPath = `./video/fitness_video${videoCount}.mp4`;
     const currentExercise = exerciseList[currentIndex];
-    const videoPath = getSanitizedVideoPath(currentExercise);
 
     return (
-      <div style={{ textAlign: 'center' }}>
-        <h2>
+      <div className="workout-content">
+        <h2 className="workout-phase-title">
           {phase === 'ready' && `Get Ready: ${currentExercise}`}
           {phase === 'workout' && `Workout: ${currentExercise}`}
           {phase === 'rest' && 'Rest Time'}
         </h2>
 
-        <h1 style={{ fontSize: '4rem', margin: '20px 0' }}>{timer}</h1>
+        <h1 className="workout-timer">{timer}</h1>
 
-        {(phase === 'workout' || phase === 'ready') && videoPath && (
-          <video
-            ref={videoRef}
-            width="480"
-            height="270"
-            controls={false}
-            muted
-            style={{ borderRadius: '8px', marginBottom: '20px' }}
-          >
+        {(phase === 'workout' || phase === 'ready') && (
+          <video ref={videoRef} className="workout-video" muted>
             <source src={videoPath} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         )}
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-          {phase === 'rest' && (
-            <button onClick={skipRest}>⏭ Skip Rest</button>
-          )}
+        <div className="workout-buttons">
+          {phase === 'rest' && <button className="workout-button" onClick={skipRest}>⏭ Skip Rest</button>}
           {phase === 'workout' && (
             <>
-              <button onClick={skipWorkout}>⏩ Skip Workout</button>
-              <button onClick={restartExercise}>🔁 Restart</button>
+              <button className="workout-button" onClick={skipWorkout}>⏩ Skip Workout</button>
+              <button className="workout-button" onClick={restartExercise}>🔁 Restart</button>
             </>
           )}
         </div>
@@ -186,39 +170,11 @@ const WorkoutFitness = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f7f7f7',
-      padding: '2rem',
-      position: 'relative'
-    }}>
-      <button
-        onClick={() => navigate('/dashboard-calendar')}
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          backgroundColor: '#ff4d4f',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '5px',
-          padding: '10px 16px',
-          fontWeight: 'bold',
-          cursor: 'pointer'
-        }}
-      >
+    <div className="workout-container">
+      <button className="quit-button" onClick={() => navigate('/dashboard-calendar')}>
         ❌ Quit
       </button>
-
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: 'calc(100vh - 60px)',
-        background: 'black',
-      }}>
-        {renderContent()}
-      </div>
+      <div className="workout-stage">{renderContent()}</div>
     </div>
   );
 };

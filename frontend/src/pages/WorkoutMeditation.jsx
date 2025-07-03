@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './WorkoutMeditation.css';
 
 const WorkoutMeditation = () => {
   const [exerciseList, setExerciseList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [phase, setPhase] = useState('ready'); // 'ready', 'workout', 'rest', 'done'
+  const [phase, setPhase] = useState('ready');
   const [timer, setTimer] = useState(5);
   const [skippedExercises, setSkippedExercises] = useState(0);
-  const videoRef = useRef(null);
   const navigate = useNavigate();
   const device_id = localStorage.getItem('device_id');
 
@@ -18,12 +18,17 @@ const WorkoutMeditation = () => {
       .then(res => res.json())
       .then(data => {
         const allExercises = Object.values(data.recommendations || {}).flat();
-        if (allExercises.length === 0) {
+
+        // Limit to max 10 meditations
+        const limitedExercises = allExercises.slice(0, 10);
+
+        if (limitedExercises.length === 0) {
           alert('No meditations found. Please update your preferences.');
           navigate('/select-activities');
           return;
         }
-        setExerciseList(allExercises);
+
+        setExerciseList(limitedExercises);
         setCurrentIndex(0);
         setPhase('ready');
         setTimer(5);
@@ -40,6 +45,7 @@ const WorkoutMeditation = () => {
       updateCompletionStatus();
       return;
     }
+
     if (phase === 'done') return;
 
     const interval = setInterval(() => {
@@ -55,19 +61,10 @@ const WorkoutMeditation = () => {
     return () => clearInterval(interval);
   }, [phase, currentIndex]);
 
-  useEffect(() => {
-    if ((phase === 'workout' || phase === 'ready') && videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    } else if (videoRef.current) {
-      videoRef.current.pause();
-    }
-  }, [phase, currentIndex]);
-
   const handleNextPhase = () => {
     if (phase === 'ready') {
       setPhase('workout');
-      setTimer(60); // meditation phase could be longer
+      setTimer(60);
     } else if (phase === 'workout') {
       setPhase('rest');
       setTimer(10);
@@ -95,13 +92,10 @@ const WorkoutMeditation = () => {
     setTimer(5);
   };
 
-  const getSanitizedVideoPath = (exerciseName) => {
-    if (!exerciseName) return '';
-    const sanitized = exerciseName
-      .toLowerCase()
-      .replace(/[^\w\s]/gi, '')
-      .replace(/\s+/g, '_');
-    return `/assets/videos/meditation_${sanitized}_video.mp4`;
+  const getFixedImagePath = (index) => {
+    const imageIndex = index + 1;
+    if (imageIndex > 10) return ''; // support max 10 images
+    return `./images/image_meditation_${imageIndex}.jpeg`;
   };
 
   const updateCompletionStatus = async () => {
@@ -126,47 +120,48 @@ const WorkoutMeditation = () => {
   const renderContent = () => {
     if (phase === 'done') {
       return (
-        <div style={{ textAlign: 'center' }}>
+        <div className="meditation-complete">
           <h2>🧘 Meditation Complete! Well done!</h2>
-          <button onClick={() => navigate('/dashboard-calendar')} style={{ marginTop: '20px' }}>
-            Back to Dashboard
-          </button>
+          <button onClick={() => navigate('/dashboard-calendar')}>Back to Dashboard</button>
         </div>
       );
     }
 
     if (currentIndex === -1 || !exerciseList[currentIndex]) {
-      return <h2 style={{ textAlign: 'center' }}>Loading...</h2>;
+      return <h2 className="loading-message">Loading...</h2>;
     }
 
     const currentExercise = exerciseList[currentIndex];
-    const videoPath = getSanitizedVideoPath(currentExercise);
+    const imagePath = getFixedImagePath(currentIndex);
 
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div className="meditation-content">
         <h2>
           {phase === 'ready' && `Get Ready: ${currentExercise}`}
           {phase === 'workout' && `Meditate: ${currentExercise}`}
-          {phase === 'rest' && 'Rest'}
+          {phase === 'rest' && 'Rest & Breathe'}
         </h2>
 
-        <h1 style={{ fontSize: '4rem', margin: '20px 0' }}>{timer}</h1>
+        <h1 className="meditation-timer">{timer}</h1>
 
-        {(phase === 'workout' || phase === 'ready') && videoPath && (
-          <video
-            ref={videoRef}
-            width="480"
-            height="270"
-            controls={false}
-            muted
-            style={{ borderRadius: '8px', marginBottom: '20px' }}
-          >
-            <source src={videoPath} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        {(phase === 'workout' || phase === 'ready') && imagePath && (
+          <img className="meditation-image" src={imagePath} alt={`Meditation ${currentIndex + 1}`} />
         )}
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+        {phase === 'workout' && (
+          <div className="meditation-music">
+            <p>🌿 Optional: Play calming music in the background.</p>
+            <a
+              href="https://open.spotify.com/search/meditation"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              🎵
+            </a>
+          </div>
+        )}
+
+        <div className="meditation-buttons">
           {phase === 'rest' && <button onClick={skipRest}>⏭ Skip Rest</button>}
           {phase === 'workout' && (
             <>
@@ -180,39 +175,11 @@ const WorkoutMeditation = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f0f8ff',
-      padding: '2rem',
-      position: 'relative'
-    }}>
-      <button
-        onClick={() => navigate('/dashboard-calendar')}
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          backgroundColor: '#ff4d4f',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '5px',
-          padding: '10px 16px',
-          fontWeight: 'bold',
-          cursor: 'pointer'
-        }}
-      >
+    <div className="meditation-wrapper">
+      <button className="quit-button" onClick={() => navigate('/dashboard-calendar')}>
         ❌ Quit
       </button>
-
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: 'calc(100vh - 60px)',
-        background: '#000',
-      }}>
-        {renderContent()}
-      </div>
+      <div className="meditation-stage">{renderContent()}</div>
     </div>
   );
 };
